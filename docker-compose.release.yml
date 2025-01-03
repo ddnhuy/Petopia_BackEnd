@@ -17,13 +17,15 @@ services:
       - 5001:8081
     depends_on:
       - postgres
+    networks:
+      - petopia_backend
     volumes:
       - /etc/letsencrypt/live/api.ddnhuy.tech/fullchain.pem:/https/fullchain.pem:ro
       - /etc/letsencrypt/live/api.ddnhuy.tech/privkey.pem:/https/privkey.pem:ro
 
   postgres:
     image: postgres:latest
-    container_name: postgres
+    container_name: postgres_petopia
     environment:
       - POSTGRES_DB=petopia
       - POSTGRES_USER=postgres
@@ -32,6 +34,8 @@ services:
       - ./.containers/db:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    networks:
+      - petopia_backend
 
   seq:
     image: datalust/seq:latest
@@ -40,3 +44,9 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - 8081:80
+    networks:
+      - petopia_backend
+
+networks:
+  petopia_backend:
+    driver: bridge
