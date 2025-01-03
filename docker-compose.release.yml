@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  petopia-api:
+    image: ${DOCKER_REGISTRY-}petopia_api
+    container_name: petopia_api
+    build:
+      context: .
+      dockerfile: src/Web.Api/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Release
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/fullchain.pem
+      - ASPNETCORE_Kestrel__Certificates__Default__KeyPath=/https/privkey.pem
+    ports:
+      - 5000:8080
+      - 5001:8081
+    depends_on:
+      - postgres
+    volumes:
+      - /etc/letsencrypt/live/api.ddnhuy.tech/fullchain.pem:/https/fullchain.pem:ro
+      - /etc/letsencrypt/live/api.ddnhuy.tech/privkey.pem:/https/privkey.pem:ro
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      - POSTGRES_DB=petopia
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  seq:
+    image: datalust/seq:latest
+    container_name: seq
+    environment:
+      - ACCEPT_EULA=Y
+    ports:
+      - 8081:80

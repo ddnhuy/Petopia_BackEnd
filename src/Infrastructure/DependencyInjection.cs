@@ -46,6 +46,8 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
+        services.AddDataProtection();
+
         services.AddIdentityCore<ApplicationUser>(options =>
         {
             options.Lockout.AllowedForNewUsers = true;
@@ -62,6 +64,12 @@ public static class DependencyInjection
         .AddSignInManager<SignInManager<ApplicationUser>>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
+
+        // Seed data super admin user
+        ServiceProvider serviceProvider = services.BuildServiceProvider();
+        UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        SeedData.Initialize(userManager, roleManager).Wait();
 
         return services;
     }

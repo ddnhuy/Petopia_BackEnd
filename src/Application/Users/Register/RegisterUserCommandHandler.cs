@@ -1,12 +1,10 @@
-﻿using Application.Abstractions.Authentication;
-using Application.Abstractions.Data;
+﻿using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Application.Users.Register;
 
@@ -35,16 +33,6 @@ internal sealed class RegisterUserCommandHandler(IApplicationDbContext context, 
         if (!result.Succeeded)
         {
             throw new ApplicationException($"Unable to create user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
-        }
-
-        if (!roleManager.RoleExistsAsync(AppRoles.SUPERADMIN).GetAwaiter().GetResult())
-        {
-            await roleManager.CreateAsync(new IdentityRole(AppRoles.SUPERADMIN));
-            await roleManager.CreateAsync(new IdentityRole(AppRoles.ADMIN));
-        }
-        if (!roleManager.RoleExistsAsync(AppRoles.USER).GetAwaiter().GetResult())
-        {
-            await roleManager.CreateAsync(new IdentityRole(AppRoles.USER));
         }
 
         ApplicationUser user = await context.Users.FirstAsync(u => u.UserName == newUser.UserName, cancellationToken);
