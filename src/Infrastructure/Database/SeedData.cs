@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using SharedKernel;
 
 namespace Infrastructure.Database;
-internal static class SeedData
+public static class SeedData
 {
     public static async Task Initialize(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {

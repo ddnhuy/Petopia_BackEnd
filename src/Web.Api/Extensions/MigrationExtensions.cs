@@ -1,4 +1,6 @@
-﻿using Infrastructure.Database;
+﻿using Domain.Users;
+using Infrastructure.Database;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Web.Api.Extensions;
@@ -13,5 +15,10 @@ public static class MigrationExtensions
             scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
         dbContext.Database.Migrate();
+
+        // Seed data super admin user
+        UserManager<ApplicationUser> userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        RoleManager<IdentityRole> roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+        SeedData.Initialize(userManager, roleManager).Wait();
     }
 }

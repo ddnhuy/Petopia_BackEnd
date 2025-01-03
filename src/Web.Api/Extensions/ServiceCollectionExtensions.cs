@@ -1,6 +1,5 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 
 namespace Web.Api.Extensions;
@@ -68,14 +67,14 @@ internal static class ServiceCollectionExtensions
             options.SwaggerDoc("v1", new OpenApiInfo
             {
                 Version = "v1.0",
-                Title = "Clean Architechture V1",
-                Description = "API of Clean Architechture Project",
+                Title = "Petopia V1",
+                Description = "API of Petopia Project",
             });
             options.SwaggerDoc("v2", new OpenApiInfo
             {
                 Version = "v2.0",
-                Title = "Clean Architechture V2",
-                Description = "API of Clean Architechture Project",
+                Title = "Petopia V2",
+                Description = "API of Petopia Project",
             });
         });
 

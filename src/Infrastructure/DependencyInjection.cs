@@ -65,12 +65,6 @@ public static class DependencyInjection
         .AddEntityFrameworkStores<ApplicationDbContext>()
         .AddDefaultTokenProviders();
 
-        // Seed data super admin user
-        ServiceProvider serviceProvider = services.BuildServiceProvider();
-        UserManager<ApplicationUser> userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-        RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-        SeedData.Initialize(userManager, roleManager).Wait();
-
         return services;
     }
 
