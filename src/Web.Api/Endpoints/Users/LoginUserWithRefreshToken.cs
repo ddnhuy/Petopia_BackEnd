@@ -14,7 +14,7 @@ internal sealed class LoginUserWithRefreshToken : IEndpoint
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("api/v{version:apiVersion}/users/refresh-token", async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("v{version:apiVersion}/users/refresh-token", async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new LoginUserWithRefreshTokenCommand(request.RefreshToken);
 

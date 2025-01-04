@@ -12,7 +12,7 @@ internal sealed class GetById : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapGet("api/v{version:apiVersion}/todos/{id:guid}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("v{version:apiVersion}/todos/{id:guid}", async (Guid id, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new GetTodoByIdQuery(id);
 

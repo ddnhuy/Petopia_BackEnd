@@ -22,7 +22,7 @@ internal sealed class Create : IEndpoint
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("api/v{version:apiVersion}/todos", async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("v{version:apiVersion}/todos", async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new CreateTodoCommand
             {

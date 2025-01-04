@@ -12,7 +12,7 @@ internal sealed class Get : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapGet("api/v{version:apiVersion}/todos", async (string userId, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("v{version:apiVersion}/todos", async (string userId, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new GetTodosQuery(userId);
 

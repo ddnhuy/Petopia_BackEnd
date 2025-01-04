@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Api.Controllers;
-[Route("api/v{version:apiVersion}/[controller]")]
+[Route("v{version:apiVersion}/[controller]")]
 [ApiVersion("2.0")]
 [ApiController]
 public class UsersController(
