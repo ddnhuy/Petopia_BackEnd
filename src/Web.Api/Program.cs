@@ -3,6 +3,7 @@ using Application;
 using HealthChecks.UI.Client;
 using Infrastructure;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.HttpOverrides;
 using Serilog;
 using Web.Api;
 using Web.Api.Extensions;
@@ -26,8 +27,19 @@ app.MapEndpoints();
 
 if (app.Environment.IsDevelopment())
 {
-}
     app.UseSwaggerWithUi();
+}
+else
+{
+    app.UseSwaggerWithUi();
+
+    app.UseForwardedHeaders(new ForwardedHeadersOptions
+    {
+        ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+    });
+
+    app.MapGet("/", () => "This is API of PETOPIA!");
+}
 
 app.ApplyMigrations();
 
