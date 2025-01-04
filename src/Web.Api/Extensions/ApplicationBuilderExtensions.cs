@@ -7,8 +7,8 @@ public static class ApplicationBuilderExtensions
         app.UseSwagger();
         app.UseSwaggerUI(options =>
         {
-            options.SwaggerEndpoint("/swagger/v2/swagger.json", "API V2");
-            options.SwaggerEndpoint("/swagger/v1/swagger.json", "API V1");
+            options.SwaggerEndpoint("v2/swagger.json", "API V2");
+            options.SwaggerEndpoint("v1/swagger.json", "API V1");
         });
 
         return app;
