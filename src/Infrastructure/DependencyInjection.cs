@@ -1,18 +1,21 @@
 ﻿using System.Text;
 using Application.Abstractions.Authentication;
 using Application.Abstractions.Data;
+using Application.Abstractions.Email;
+using Application.Abstractions.Services;
 using Domain.Users;
 using Infrastructure.Authentication;
 using Infrastructure.Database;
-using Infrastructure.Time;
+using Infrastructure.Services;
+using Infrastructure.Workers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using SharedKernel;
 
 namespace Infrastructure;
 
@@ -30,7 +33,9 @@ public static class DependencyInjection
 
     private static IServiceCollection AddServices(this IServiceCollection services)
     {
-        services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+        services.AddSingleton<IEmailQueue, EmailQueue>();
+        services.AddHostedService<EmailWorker>();
+        services.AddTransient<IEmailSender, EmailSender>();
 
         return services;
     }
@@ -46,7 +51,9 @@ public static class DependencyInjection
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
-        services.AddDataProtection();
+        services.AddDataProtection()
+            .PersistKeysToFileSystem(new DirectoryInfo("Keys"))
+            .SetApplicationName("Petopia");
 
         services.AddIdentityCore<ApplicationUser>(options =>
         {

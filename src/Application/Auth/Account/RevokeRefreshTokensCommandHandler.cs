@@ -3,7 +3,7 @@ using Application.Abstractions.Messaging;
 using Domain.Users;
 using SharedKernel;
 
-namespace Application.Users.Login;
+namespace Application.Auth.Account;
 internal sealed class RevokeRefreshTokensCommandHandler(
     IApplicationDbContext context) : ICommandHandler<RevokeRefreshTokensCommand, bool>
 {

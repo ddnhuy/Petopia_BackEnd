@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Application.Users.Login;
+using Application.Auth.Account;
 using Asp.Versioning;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;

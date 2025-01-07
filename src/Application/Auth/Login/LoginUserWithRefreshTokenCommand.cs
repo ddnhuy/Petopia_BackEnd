@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
 
-namespace Application.Users.Login;
+namespace Application.Auth.Login;
 
 public sealed record LoginUserWithRefreshTokenCommand(string RefreshToken) : ICommand<LoginResponse>;
