@@ -6,14 +6,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 
-namespace Application.Users.Register;
+namespace Application.Auth.Register;
 
 internal sealed class RegisterUserCommandHandler(IApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IPublisher publisher)
     : ICommandHandler<RegisterUserCommand, string>
 {
     public async Task<Result<string>> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
-        if (await context.Users.AnyAsync(u => u.Email == command.Email, cancellationToken))
+        if (await context.Users.AnyAsync(u => u.Email == command.Email || u.UserName == command.UserName, cancellationToken))
         {
             return Result.Failure<string>(UserErrors.EmailNotUnique);
         }

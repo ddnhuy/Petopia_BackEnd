@@ -1,4 +1,4 @@
-﻿using Application.Users.Login;
+﻿using Application.Auth.Login;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using MediatR;
@@ -6,15 +6,15 @@ using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
 
-namespace Web.Api.Endpoints.Users;
+namespace Web.Api.Endpoints.Auth;
 
 internal sealed class LoginUserWithRefreshToken : IEndpoint
 {
-    public sealed record Request(string RefreshToken);
+    private sealed record Request(string RefreshToken);
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("v{version:apiVersion}/users/refresh-token", async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("v{version:apiVersion}/auth/refresh-token", async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new LoginUserWithRefreshTokenCommand(request.RefreshToken);
 
