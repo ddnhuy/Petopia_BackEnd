@@ -1,4 +1,4 @@
-﻿using Application.Users.Login;
+﻿using Application.Auth.Login;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using MediatR;
@@ -6,15 +6,15 @@ using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
 
-namespace Web.Api.Endpoints.Users;
+namespace Web.Api.Endpoints.Auth;
 
 internal sealed class Login : IEndpoint
 {
-    public sealed record Request(string UserName, string Password);
+    private sealed record Request(string UserName, string Password);
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("v{version:apiVersion}/users/login", async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("v{version:apiVersion}/auth/login", async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new LoginUserCommand(request.UserName, request.Password);
 

@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
 
-namespace Application.Users.Login;
+namespace Application.Auth.Account;
 
 public sealed record RevokeRefreshTokensCommand(string UserId) : ICommand<bool>;

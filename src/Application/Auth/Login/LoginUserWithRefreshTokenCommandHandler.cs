@@ -5,7 +5,7 @@ using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 
-namespace Application.Users.Login;
+namespace Application.Auth.Login;
 internal sealed class LoginUserWithRefreshTokenCommandHandler(
     IApplicationDbContext context,
     ITokenProvider tokenProvider) : ICommandHandler<LoginUserWithRefreshTokenCommand, LoginResponse>

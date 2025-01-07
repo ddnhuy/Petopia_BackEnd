@@ -18,7 +18,7 @@ public static class UserErrors
 
     public static readonly Error EmailNotUnique = Error.Conflict(
         "Users.EmailNotUnique",
-        "The provided email is not unique.");
+        "The provided username or email is not unique.");
 
     public static readonly Error InvalidRefreshToken = Error.Problem(
         "Users.InvalidRefreshToken",
@@ -26,9 +26,13 @@ public static class UserErrors
 
     public static readonly Error EmailNotConfirmed = Error.Problem(
         "Users.EmailNotConfirmed",
-        "User's email is not confirmed.");
+        "Your email is not confirmed.");
 
     public static readonly Error UserLockedOut = Error.Problem(
         "Users.UserLockedOut",
         "The user was locked out.");
+
+    public static readonly Error InvalidConfirmToken = Error.Problem(
+        "Users.InvalidConfirmToken",
+        "The confirmation token is invalid.");
 }

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 
-namespace Application.Users.Login;
+namespace Application.Auth.Login;
 
 internal sealed class LoginUserCommandHandler(
     IApplicationDbContext context,
