@@ -70,6 +70,8 @@ csharp_style_expression_bodied_lambdas = true:error
 csharp_style_expression_bodied_local_functions = true:error
 dotnet_diagnostic.IDE0161.severity = suggestion
 dotnet_diagnostic.IDE0053.severity = suggestion
+csharp_prefer_system_threading_lock = true:suggestion
+dotnet_diagnostic.CA1515.severity = suggestion
 
 [*.{cs,vb}]
 dotnet_style_prefer_simplified_boolean_expressions = true:suggestion
