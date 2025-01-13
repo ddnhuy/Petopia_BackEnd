@@ -8,13 +8,13 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Auth;
 
-internal sealed class LoginUserWithRefreshToken : IEndpoint
+internal sealed class LoginWithRefreshToken : IEndpoint
 {
     private sealed record Request(string RefreshToken);
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("v{version:apiVersion}/auth/refresh-token", async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("v{version:apiVersion}/auth/login/refresh-token", async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new LoginUserWithRefreshTokenCommand(request.RefreshToken);
 
@@ -22,7 +22,7 @@ internal sealed class LoginUserWithRefreshToken : IEndpoint
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })
-        .WithTags(Tags.Users)
+        .WithTags(Tags.Auth)
         .WithApiVersionSet(apiVersionSet)
         .MapToApiVersion(new ApiVersion(2, 0));
     }
