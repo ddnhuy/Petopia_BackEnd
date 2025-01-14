@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Email;
+using Domain.Auths;
 using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

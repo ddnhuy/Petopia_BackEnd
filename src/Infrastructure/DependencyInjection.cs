@@ -8,6 +8,7 @@ using Infrastructure.Authentication;
 using Infrastructure.Database;
 using Infrastructure.Services;
 using Infrastructure.Workers;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
@@ -36,6 +37,8 @@ public static class DependencyInjection
         services.AddSingleton<IEmailQueue, EmailQueue>();
         services.AddHostedService<EmailWorker>();
         services.AddTransient<IEmailSender, EmailSender>();
+
+        services.AddHttpClient();
 
         return services;
     }

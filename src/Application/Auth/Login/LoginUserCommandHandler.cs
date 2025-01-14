@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Authentication;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
+using Domain.Auths;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ namespace Application.Auth.Login;
 
 internal sealed class LoginUserCommandHandler(
     IApplicationDbContext context,
-    UserManager<ApplicationUser> _userManager,
+    UserManager<ApplicationUser> userManager,
     ITokenProvider tokenProvider) : ICommandHandler<LoginUserCommand, LoginResponse>
 {
     public async Task<Result<LoginResponse>> Handle(LoginUserCommand command, CancellationToken cancellationToken)
@@ -24,18 +25,18 @@ internal sealed class LoginUserCommandHandler(
             return Result.Failure<LoginResponse>(UserErrors.NotFoundByEmail);
         }
 
-        bool verified = await _userManager.CheckPasswordAsync(user, command.Password);
+        bool verified = await userManager.CheckPasswordAsync(user, command.Password);
 
         if (!verified)
         {
             return Result.Failure<LoginResponse>(UserErrors.NotFoundByEmail);
         }
 
-        if (!await _userManager.IsEmailConfirmedAsync(user))
+        if (!await userManager.IsEmailConfirmedAsync(user))
         {
             return Result.Failure<LoginResponse>(UserErrors.EmailNotConfirmed);
         }
-        if (await _userManager.IsLockedOutAsync(user))
+        if (await userManager.IsLockedOutAsync(user))
         {
             return Result.Failure<LoginResponse>(UserErrors.UserLockedOut);
         }

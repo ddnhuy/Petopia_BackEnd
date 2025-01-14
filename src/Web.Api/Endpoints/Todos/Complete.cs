@@ -21,7 +21,7 @@ internal sealed class Complete : IEndpoint
 
             return result.Match(Results.NoContent, CustomResults.Problem);
         })
-        .WithTags(Tags.Todos)
+        .WithTags(Tags.Todo)
         .WithApiVersionSet(apiVersionSet)
         .MapToApiVersion(new ApiVersion(1, 0))
         .RequireAuthorization();
