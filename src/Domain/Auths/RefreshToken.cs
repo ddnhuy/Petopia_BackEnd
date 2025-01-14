@@ -1,4 +1,6 @@
-﻿namespace Domain.Users;
+﻿using Domain.Users;
+
+namespace Domain.Auths;
 public class RefreshToken
 {
     public Guid Id { get; set; }

@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
+using Domain.Auths;
 using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -8,7 +9,7 @@ using SharedKernel;
 
 namespace Application.Auth.Register;
 
-internal sealed class RegisterUserCommandHandler(IApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IPublisher publisher)
+internal sealed class RegisterUserCommandHandler(IApplicationDbContext context, UserManager<ApplicationUser> userManager, IPublisher publisher)
     : ICommandHandler<RegisterUserCommand, string>
 {
     public async Task<Result<string>> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
@@ -35,16 +36,10 @@ internal sealed class RegisterUserCommandHandler(IApplicationDbContext context, 
             throw new ApplicationException($"Unable to create user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
         }
 
-        ApplicationUser user = await context.Users.FirstAsync(u => u.UserName == newUser.UserName, cancellationToken);
+        await userManager.AddToRoleAsync(newUser, AppRoles.USER);
 
-        IdentityRole? userRole = await roleManager.FindByNameAsync(AppRoles.USER);
-        if (userRole is not null && !string.IsNullOrEmpty(userRole.Name))
-        {
-            await userManager.AddToRoleAsync(user, userRole.Name);
-        }
+        await publisher.Publish(new UserRegisteredDomainEvent(newUser.Id), cancellationToken);
 
-        await publisher.Publish(new UserRegisteredDomainEvent(user.Id), cancellationToken);
-
-        return user.Id;
+        return newUser.Id;
     }
 }
