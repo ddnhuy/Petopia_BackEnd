@@ -1,6 +1,6 @@
 ﻿using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
-using Domain.Users;
+using Domain.Auths;
 using SharedKernel;
 
 namespace Application.Auth.Account;

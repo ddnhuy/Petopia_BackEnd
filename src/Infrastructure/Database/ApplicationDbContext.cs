@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Linq.Expressions;
 using Application.Abstractions.Data;
+using Domain.Auths;
 using Domain.Todos;
 using Domain.Users;
 using MediatR;
