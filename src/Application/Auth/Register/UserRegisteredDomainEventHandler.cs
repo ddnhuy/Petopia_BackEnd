@@ -26,8 +26,17 @@ internal sealed class UserRegisteredDomainEventHandler(
 
         IConfigurationSection serverInfo = configuration.GetSection("ServerInformation");
         string domain = serverInfo["Domain"];
-        string version = serverInfo["Version"];
-        string confirmEmailLink = $"{domain}/{version}/auth/confirm-email?email={user.Email}&token={confirmToken}";
+        string confirmEmailLink = string.Empty;
+
+        if (serverInfo["Environment"] == "Development")
+        {
+            string version = serverInfo["Version"];
+            confirmEmailLink = $"{domain}/{version}/auth/confirm-email?email={user.Email}&token={confirmToken}";
+        }
+        else
+        {
+            confirmEmailLink = $"{domain}/petopia/email-comfirmation/?email={user.Email}&token={confirmToken}";
+        }
 
         emailQueue.Enqueue(
             new EmailMessage(
