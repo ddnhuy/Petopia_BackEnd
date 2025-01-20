@@ -35,7 +35,7 @@ internal sealed class UserRegisteredDomainEventHandler(
         }
         else
         {
-            confirmEmailLink = $"{domain}/petopia/email-comfirmation/?email={user.Email}&token={confirmToken}";
+            confirmEmailLink = $"{domain}/email-comfirmation/?email={user.Email}&token={confirmToken}";
         }
 
         emailQueue.Enqueue(
