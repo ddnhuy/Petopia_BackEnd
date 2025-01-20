@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.User;
-using Application.Users.GetById;
+using Application.Users.Update;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using MediatR;
@@ -10,17 +10,17 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Users;
 
-internal sealed class GetById : IEndpoint
+internal sealed class Update : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapGet("v{version:apiVersion}/users/{userId}", async (string userId, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPut("v{version:apiVersion}/users/update", [Authorize] async (UserDto user, ISender sender, CancellationToken cancellationToken) =>
         {
-            var query = new GetUserByIdQuery(userId);
+            var command = new UpdateUserCommand(user);
 
-            Result<UserDto> result = await sender.Send(query, cancellationToken);
+            Result result = await sender.Send(command, cancellationToken);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return result.Match(Results.NoContent, CustomResults.Problem);
         })
         .WithTags(Tags.User)
         .WithApiVersionSet(apiVersionSet)

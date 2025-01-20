@@ -29,7 +29,7 @@ internal sealed class LoginUserCommandHandler(
 
         if (!verified)
         {
-            return Result.Failure<LoginResponse>(UserErrors.NotFoundByEmail);
+            return Result.Failure<LoginResponse>(UserErrors.WrongPassword);
         }
 
         if (!await userManager.IsEmailConfirmedAsync(user))
