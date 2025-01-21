@@ -35,4 +35,8 @@ public static class UserErrors
     public static readonly Error InvalidConfirmToken = Error.Problem(
         "Users.InvalidConfirmToken",
         "The confirmation token is invalid.");
+
+    public static readonly Error WrongPassword = Error.Problem(
+        "Users.WrongPassword",
+        "You have entered the wrong password.");
 }
