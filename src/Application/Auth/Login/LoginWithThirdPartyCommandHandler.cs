@@ -56,16 +56,16 @@ internal sealed class LoginWithThirdPartyCommandHandler(
                 {
                     await userManager.AddToRoleAsync(newUser, AppRoles.USER);
 
-                    var loginInfo = new UserLoginInfo(request.LoginProvider, request.Token, request.LoginProvider);
-                    await userManager.AddLoginAsync(newUser, loginInfo);
-
                     userFromDb = newUser;
+
                 }
                 else
                 {
                     throw new();
                 }
             }
+            var loginInfo = new UserLoginInfo(request.LoginProvider, request.Token, request.LoginProvider);
+            await userManager.AddLoginAsync(userFromDb, loginInfo);
 
             bool isLockedOut = await userManager.IsLockedOutAsync(userFromDb);
             if (isLockedOut)
