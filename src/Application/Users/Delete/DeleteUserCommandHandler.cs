@@ -1,11 +1,10 @@
 ﻿using Application.Abstractions.Authentication;
 using Application.Abstractions.Messaging;
-using Application.Users.Delete;
 using Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using SharedKernel;
 
-namespace Application.Users;
+namespace Application.Users.Delete;
 internal sealed class DeleteUserCommandHandler(UserManager<ApplicationUser> userManager, IUserContext userContext)
     : ICommandHandler<DeleteUserCommand>
 {
