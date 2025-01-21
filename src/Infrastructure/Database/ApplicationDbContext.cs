@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using Application.Abstractions.Data;
 using Domain.Auths;
+using Domain.Pets;
 using Domain.Todos;
 using Domain.Users;
 using MediatR;
@@ -18,6 +19,10 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<TodoItem> TodoItems { get; set; }
 
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+
+    public DbSet<Pet> Pets { get; set; }
+    public DbSet<PetWeight> PetWeights { get; set; }
+    public DbSet<PetVaccination> PetVaccinations { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
