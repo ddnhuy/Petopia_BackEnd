@@ -23,9 +23,9 @@ internal sealed class Register : IEndpoint
                 request.LastName,
                 request.Password);
 
-            Result<string> result = await sender.Send(command, cancellationToken);
+            Result result = await sender.Send(command, cancellationToken);
 
-            return result.Match(Results.Ok, CustomResults.Problem);
+            return result.Match(Results.Created, CustomResults.Problem);
         })
         .WithTags(Tags.Auth)
         .WithApiVersionSet(apiVersionSet)
