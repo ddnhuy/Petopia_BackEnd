@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="PetWeights\GetByPetId\**" />
+    <EmbeddedResource Remove="PetWeights\GetByPetId\**" />
+    <None Remove="PetWeights\GetByPetId\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
     <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.10.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
@@ -21,15 +27,10 @@
 
   <ItemGroup>
     <Folder Include="PetVaccinations\Create\" />
-    <Folder Include="PetVaccinations\GetById\" />
+    <Folder Include="PetVaccinations\Get\" />
     <Folder Include="PetVaccinations\Delete\" />
-    <Folder Include="PetVaccinations\GetByPetId\" />
+    <Folder Include="PetVaccinations\GetById\" />
     <Folder Include="PetVaccinations\Update\" />
-    <Folder Include="PetWeights\Create\" />
-    <Folder Include="PetWeights\Delete\" />
-    <Folder Include="PetWeights\GetById\" />
-    <Folder Include="PetWeights\GetByPetId\" />
-    <Folder Include="PetWeights\Update\" />
   </ItemGroup>
 
 </Project>

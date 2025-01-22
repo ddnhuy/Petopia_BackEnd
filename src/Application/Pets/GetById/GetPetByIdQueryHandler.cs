@@ -14,7 +14,7 @@ internal sealed class GetPetByIdQueryHandler(
 {
     public async Task<Result<PetDto>> Handle(GetPetByIdQuery query, CancellationToken cancellationToken)
     {
-        Pet pet = await context.Pets
+        Pet? pet = await context.Pets
             .FirstOrDefaultAsync(p => p.Id == query.PetId, cancellationToken);
 
         if (pet is null)

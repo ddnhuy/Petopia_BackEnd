@@ -17,15 +17,7 @@ public static class PetErrors
 
     public static Error WeightNotFound => Error.Problem(
         "Pets.WeightNotFound",
-        "Weight not found.");
-
-    public static Error InvalidPetWeightValue => Error.Problem(
-        "Pets.InvalidPetWeightValue",
-        "Weight value must be greater than zero.");
-
-    public static Error InvalidPetWeightDate => Error.Problem(
-        "Pets.InvalidPetWeightDate",
-        "Weight date must be less than or equal to the current date.");
+        "Pet's weight not found.");
 
     public static Error PetVaccinationNotFound => Error.Problem(
         "Pets.PetVaccinationNotFound",
