@@ -1,7 +1,8 @@
-﻿namespace Domain.Pets;
-public sealed class PetVaccination
+﻿using SharedKernel;
+
+namespace Domain.Pets;
+public sealed class PetVaccination : Entity
 {
-    public Guid Id { get; private set; } = Guid.NewGuid();
     public Guid PetId { get; private set; }
     public DateTime Date { get; set; }
     public string VaccineName { get; set; }

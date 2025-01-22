@@ -14,8 +14,8 @@ public static class SeedData
             await roleManager.CreateAsync(new IdentityRole(AppRoles.USER));
         }
 
-        string userName = "admin@petopia.com";
-        string password = "Petopia@123";
+        string userName = "petopia";
+        string password = "Petopia123@";
 
         ApplicationUser? user = await userManager.FindByEmailAsync(userName);
         if (user is null)
@@ -23,7 +23,7 @@ public static class SeedData
             user = new ApplicationUser
             {
                 UserName = userName,
-                Email = userName,
+                Email = "admin@petopia.com",
                 FirstName = "Petopia",
                 LastName = "Super Admin",
                 CreatedAt = DateTime.UtcNow,

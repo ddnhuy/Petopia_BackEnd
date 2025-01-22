@@ -9,7 +9,7 @@ public sealed class ApplicationUser : IdentityUser
     public string LastName { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime UpdatedAt { get; set; }
-    public Uri ImageUrl { get; set; }
+    public Uri? ImageUrl { get; set; }
 
     public ICollection<Pet> Pets { get; set; } = [];
 
@@ -17,7 +17,7 @@ public sealed class ApplicationUser : IdentityUser
 
     public ApplicationUser() { }
 
-    public ApplicationUser(string firstName, string lastName, string email, Uri imageUrl)
+    public ApplicationUser(string firstName, string lastName, string email, Uri? imageUrl)
     {
         FirstName = firstName;
         LastName = lastName;

@@ -8,6 +8,7 @@ using Domain.Users;
 using MediatR;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata;
 using SharedKernel;
 
@@ -54,6 +55,8 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
         //     - eventual consistency
         //     - handlers can fail
 
+        SetUpdatedAt();
+
         int result = await base.SaveChangesAsync(cancellationToken);
 
         await PublishDomainEventsAsync();
@@ -84,6 +87,23 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
         foreach (IDomainEvent domainEvent in domainEvents)
         {
             await publisher.Publish(domainEvent);
+        }
+    }
+
+    private void SetUpdatedAt()
+    {
+        IEnumerable<EntityEntry> entries = ChangeTracker.Entries()
+            .Where(e => e.Entity is Entity && (e.State == EntityState.Added || e.State == EntityState.Modified));
+
+        foreach (EntityEntry entry in entries)
+        {
+            var entity = (Entity)entry.Entity;
+            entity.UpdatedAt = DateTime.UtcNow;
+
+            if (entry.State == EntityState.Added)
+            {
+                entity.CreatedAt = DateTime.UtcNow;
+            }
         }
     }
 }
