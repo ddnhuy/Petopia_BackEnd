@@ -36,7 +36,6 @@ internal sealed class CreateTodoCommandHandler(
             DueDate = command.DueDate,
             Labels = command.Labels,
             IsCompleted = false,
-            CreatedAt = DateTime.UtcNow
         };
 
         todoItem.Raise(new TodoItemCreatedDomainEvent(todoItem.Id));

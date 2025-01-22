@@ -15,7 +15,7 @@ internal sealed class LoginWithThirdPartyCommandHandler(
     ITokenProvider tokenProvider,
     HttpClient httpClient) : ICommandHandler<LoginWithThirdPartyCommand, LoginResponse>
 {
-    private sealed record UserInfo(string Email, string FirstName, string LastName, string Picture);
+    private sealed record UserInfo(string Email, string FirstName, string LastName, Uri ImageUrl);
 
     public async Task<Result<LoginResponse>> Handle(LoginWithThirdPartyCommand request, CancellationToken cancellationToken)
     {
@@ -45,7 +45,7 @@ internal sealed class LoginWithThirdPartyCommandHandler(
                     Email = userInfo.Email,
                     FirstName = userInfo.FirstName,
                     LastName = userInfo.LastName,
-                    ImageUrl = userInfo.Picture,
+                    ImageUrl = userInfo.ImageUrl,
                     CreatedAt = DateTime.UtcNow,
                     UpdatedAt = DateTime.UtcNow,
                     EmailConfirmed = true
@@ -128,24 +128,24 @@ internal sealed class LoginWithThirdPartyCommandHandler(
 
     private UserInfo GetUserInfo(JObject authProfile, string loginProvider)
     {
-        string firstName, lastName, email, picture;
+        string firstName, lastName, email, imageUrl;
         switch (loginProvider)
         {
             case LoginProvider.GOOGLE:
                 firstName = authProfile["given_name"]!.ToString();
                 lastName = authProfile["family_name"]!.ToString();
                 email = authProfile["email"]!.ToString();
-                picture = authProfile["picture"]!.ToString();
+                imageUrl = authProfile["picture"]!.ToString();
                 break;
             case LoginProvider.FACEBOOK:
                 firstName = authProfile["first_name"]!.ToString();
                 lastName = authProfile["last_name"]!.ToString();
                 email = authProfile["email"]!.ToString();
-                picture = authProfile["picture"]!["data"]!["url"]!.ToString();
+                imageUrl = authProfile["picture"]!["data"]!["url"]!.ToString();
                 break;
             default:
                 throw new InvalidDataException();
         }
-        return new UserInfo(email, firstName, lastName, picture);
+        return new UserInfo(email, firstName, lastName, new Uri(imageUrl));
     }
 }

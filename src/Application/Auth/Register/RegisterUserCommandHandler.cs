@@ -10,9 +10,9 @@ using SharedKernel;
 namespace Application.Auth.Register;
 
 internal sealed class RegisterUserCommandHandler(IApplicationDbContext context, UserManager<ApplicationUser> userManager, IPublisher publisher)
-    : ICommandHandler<RegisterUserCommand, string>
+    : ICommandHandler<RegisterUserCommand>
 {
-    public async Task<Result<string>> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(RegisterUserCommand command, CancellationToken cancellationToken)
     {
         if (await context.Users.AnyAsync(u => u.Email == command.Email || u.UserName == command.UserName, cancellationToken))
         {
@@ -40,6 +40,6 @@ internal sealed class RegisterUserCommandHandler(IApplicationDbContext context, 
 
         await publisher.Publish(new UserRegisteredDomainEvent(newUser.Id), cancellationToken);
 
-        return newUser.Id;
+        return Result.Success();
     }
 }
