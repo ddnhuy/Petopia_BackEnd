@@ -13,4 +13,6 @@ public record PetDto
     public DateTime? DeathDate { get; set; }
     public Gender Gender { get; set; }
     public bool IsSterilized { get; set; }
+
+    public DateTime UpdatedAt { get; set; }
 }

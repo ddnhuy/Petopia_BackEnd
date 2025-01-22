@@ -1,12 +1,12 @@
-﻿using Asp.Versioning.Builder;
-using Asp.Versioning;
-using MediatR;
+﻿using Application.DTOs.Pet;
 using Application.PetWeights.GetById;
+using Asp.Versioning;
+using Asp.Versioning.Builder;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
-using Domain.Pets;
 
 namespace Web.Api.Endpoints.PetWeights;
 
@@ -18,7 +18,7 @@ public class GetById : IEndpoint
         {
             var query = new GetPetWeightByIdQuery(petWeightId);
 
-            Result<PetWeight> result = await sender.Send(query, cancellationToken);
+            Result<PetWeightDto> result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })

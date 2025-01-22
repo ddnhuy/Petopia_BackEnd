@@ -1,4 +1,5 @@
-﻿using Application.PetVaccinations.Get;
+﻿using Application.DTOs.Pet;
+using Application.PetVaccinations.Get;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using Domain.Pets;
@@ -18,7 +19,7 @@ public class Get : IEndpoint
         {
             var query = new GetPetVaccinationsQuery(petId);
 
-            Result<List<PetVaccination>> result = await sender.Send(query, cancellationToken);
+            Result<List<PetVaccinationDto>> result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })

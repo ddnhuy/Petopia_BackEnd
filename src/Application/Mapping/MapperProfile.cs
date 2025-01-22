@@ -13,5 +13,7 @@ internal class MapperProfile : Profile
             .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow));
 
         CreateMap<Pet, PetDto>().ReverseMap();
+        CreateMap<PetWeight, PetWeightDto>().ReverseMap();
+        CreateMap<PetVaccination, PetVaccinationDto>().ReverseMap();
     }
 }

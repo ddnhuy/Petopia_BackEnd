@@ -7,6 +7,7 @@ using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
 using Domain.Pets;
+using Application.DTOs.Pet;
 
 namespace Web.Api.Endpoints.PetVaccinations;
 
@@ -18,7 +19,7 @@ public class GetById : IEndpoint
         {
             var query = new GetPetVaccinationByIdQuery(petVaccinationId);
 
-            Result<PetVaccination> result = await sender.Send(query, cancellationToken);
+            Result<PetVaccinationDto> result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })

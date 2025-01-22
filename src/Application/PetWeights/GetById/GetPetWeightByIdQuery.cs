@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.Pets;
+using Application.DTOs.Pet;
 
 namespace Application.PetWeights.GetById;
-public sealed record GetPetWeightByIdQuery(Guid PetWeightId) : IQuery<PetWeight>;
+public sealed record GetPetWeightByIdQuery(Guid PetWeightId) : IQuery<PetWeightDto>;

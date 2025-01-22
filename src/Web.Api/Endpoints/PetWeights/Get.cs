@@ -1,7 +1,7 @@
-﻿using Application.PetWeights.Get;
+﻿using Application.DTOs.Pet;
+using Application.PetWeights.Get;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
-using Domain.Pets;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using SharedKernel;
@@ -18,7 +18,7 @@ public class Get : IEndpoint
         {
             var query = new GetPetWeightsQuery(petId);
 
-            Result<List<PetWeight>> result = await sender.Send(query, cancellationToken);
+            Result<List<PetWeightDto>> result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })
