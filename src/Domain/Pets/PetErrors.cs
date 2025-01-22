@@ -15,23 +15,11 @@ public static class PetErrors
         "Pets.PetAlreadyExists",
         "Pet already exists.");
 
-    public static Error WeightNotFound => Error.Problem(
-        "Pets.WeightNotFound",
+    public static Error PetWeightNotFound => Error.NotFound(
+        "Pets.PetWeightNotFound",
         "Pet's weight not found.");
 
-    public static Error PetVaccinationNotFound => Error.Problem(
+    public static Error PetVaccinationNotFound => Error.NotFound(
         "Pets.PetVaccinationNotFound",
         "Pet vaccination not found.");
-
-    public static Error InvalidPetVaccinationDate => Error.Problem(
-        "Pets.InvalidPetVaccinationDate",
-        "Vaccination date must be less than or equal to the current date.");
-
-    public static Error InvalidPetVaccinationFrequency => Error.Problem(
-        "Pets.InvalidPetVaccinationFrequency",
-        "Invalid vaccination frequency.");
-
-    public static Error InvalidPetVaccinationName => Error.Problem(
-        "Pets.InvalidPetVaccinationName",
-        "Vaccination name must not be empty.");
 }

@@ -25,12 +25,4 @@
 	<InternalsVisibleTo Include="Application.UnitTests" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PetVaccinations\Create\" />
-    <Folder Include="PetVaccinations\Get\" />
-    <Folder Include="PetVaccinations\Delete\" />
-    <Folder Include="PetVaccinations\GetById\" />
-    <Folder Include="PetVaccinations\Update\" />
-  </ItemGroup>
-
 </Project>

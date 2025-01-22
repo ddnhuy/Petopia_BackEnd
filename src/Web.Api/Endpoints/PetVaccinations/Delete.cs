@@ -1,27 +1,27 @@
-﻿using Asp.Versioning.Builder;
+﻿using Application.PetVaccinations.Delete;
 using Asp.Versioning;
+using Asp.Versioning.Builder;
 using MediatR;
-using Application.PetWeights.Delete;
-using SharedKernel;
 using Microsoft.AspNetCore.Authorization;
+using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
 
-namespace Web.Api.Endpoints.PetWeights;
+namespace Web.Api.Endpoints.PetVaccinations;
 
 public class Delete : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapDelete("v{version:apiVersion}/pet-weights/{petWeightId}", [Authorize] async (Guid petWeightId, ISender sender, CancellationToken cancellationToken) =>
+        app.MapDelete("v{version:apiVersion}/pet-vaccinations/{petVaccinationId}", [Authorize] async (Guid petVaccinationId, ISender sender, CancellationToken cancellationToken) =>
         {
-            var command = new DeletePetWeightCommand(petWeightId);
+            var command = new DeletePetVaccinationCommand(petVaccinationId);
 
             Result result = await sender.Send(command, cancellationToken);
 
             return result.Match(Results.NoContent, CustomResults.Problem);
         })
-        .WithTags(Tags.PetWeight)
+        .WithTags(Tags.PetVaccination)
         .WithApiVersionSet(apiVersionSet)
         .MapToApiVersion(new ApiVersion(2, 0));
     }

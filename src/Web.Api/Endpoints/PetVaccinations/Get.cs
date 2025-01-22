@@ -1,4 +1,4 @@
-﻿using Application.PetWeights.Get;
+﻿using Application.PetVaccinations.Get;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using Domain.Pets;
@@ -8,21 +8,21 @@ using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
 
-namespace Web.Api.Endpoints.PetWeights;
+namespace Web.Api.Endpoints.PetVaccinations;
 
 public class Get : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapGet("v{version:apiVersion}/pet-weights", [Authorize] async (Guid petId, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("v{version:apiVersion}/pet-vaccinations", [Authorize] async (Guid petId, ISender sender, CancellationToken cancellationToken) =>
         {
-            var query = new GetPetWeightsQuery(petId);
+            var query = new GetPetVaccinationsQuery(petId);
 
-            Result<List<PetWeight>> result = await sender.Send(query, cancellationToken);
+            Result<List<PetVaccination>> result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })
-        .WithTags(Tags.PetWeight)
+        .WithTags(Tags.PetVaccination)
         .WithApiVersionSet(apiVersionSet)
         .MapToApiVersion(new ApiVersion(2, 0));
     }

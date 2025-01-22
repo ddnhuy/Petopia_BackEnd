@@ -18,7 +18,7 @@ internal sealed class UpdatePetWeightCommandHandler(
 
         if (petWeight is null)
         {
-            return Result.Failure(PetErrors.WeightNotFound);
+            return Result.Failure(PetErrors.PetWeightNotFound);
         }
 
         Pet? pet = await context.Pets

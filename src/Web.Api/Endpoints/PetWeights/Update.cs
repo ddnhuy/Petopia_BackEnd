@@ -15,7 +15,7 @@ public class Update : IEndpoint
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPut("v{version:apiVersion}/petweights/update", [Authorize] async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPut("v{version:apiVersion}/pet-weights/update", [Authorize] async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new UpdatePetWeightCommand(request.PetWeightId, request.Value);
 

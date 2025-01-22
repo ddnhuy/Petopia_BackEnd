@@ -7,4 +7,5 @@ public static class Tags
     public const string Todo = "Todos";
     public const string Pet = "Pets";
     public const string PetWeight = "Pet Weights";
+    public const string PetVaccination = "Pet Vaccinations";
 }

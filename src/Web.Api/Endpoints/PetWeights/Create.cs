@@ -15,7 +15,7 @@ public class Create : IEndpoint
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("v{version:apiVersion}/petweights/create", [Authorize] async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("v{version:apiVersion}/pet-weights/create", [Authorize] async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new CreatePetWeightCommand(request.PetId, request.Value);
 

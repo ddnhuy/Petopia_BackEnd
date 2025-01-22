@@ -15,7 +15,7 @@ internal sealed class GetPetWeightByIdQueryHandler(
 
         if (petWeight is null)
         {
-            return Result.Failure<PetWeight>(PetErrors.WeightNotFound);
+            return Result.Failure<PetWeight>(PetErrors.PetWeightNotFound);
         }
 
         return Result.Success(petWeight);

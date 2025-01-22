@@ -1,28 +1,28 @@
 ﻿using Asp.Versioning.Builder;
 using Asp.Versioning;
 using MediatR;
-using Application.PetWeights.GetById;
+using Application.PetVaccinations.GetById;
 using Microsoft.AspNetCore.Authorization;
 using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
 using Domain.Pets;
 
-namespace Web.Api.Endpoints.PetWeights;
+namespace Web.Api.Endpoints.PetVaccinations;
 
 public class GetById : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapGet("v{version:apiVersion}/pet-weights/{petWeightId}", [Authorize] async (Guid petWeightId, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("v{version:apiVersion}/pet-vaccinations/{petVaccinationId}", [Authorize] async (Guid petVaccinationId, ISender sender, CancellationToken cancellationToken) =>
         {
-            var query = new GetPetWeightByIdQuery(petWeightId);
+            var query = new GetPetVaccinationByIdQuery(petVaccinationId);
 
-            Result<PetWeight> result = await sender.Send(query, cancellationToken);
+            Result<PetVaccination> result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })
-        .WithTags(Tags.PetWeight)
+        .WithTags(Tags.PetVaccination)
         .WithApiVersionSet(apiVersionSet)
         .MapToApiVersion(new ApiVersion(2, 0));
     }
