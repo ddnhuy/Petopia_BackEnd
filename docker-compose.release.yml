@@ -27,7 +27,7 @@ services:
     image: postgres:latest
     container_name: postgres_petopia
     environment:
-      - POSTGRES_DB=petopia_production
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     volumes:
