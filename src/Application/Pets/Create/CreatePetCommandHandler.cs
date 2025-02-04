@@ -27,7 +27,8 @@ internal sealed class CreatePetCommandHandler(
             command.BirthDate,
             null,
             command.Gender,
-            command.IsSterilized);
+            command.IsSterilized,
+            command.ImagePublicId);
 
         context.Pets.Add(pet);
 

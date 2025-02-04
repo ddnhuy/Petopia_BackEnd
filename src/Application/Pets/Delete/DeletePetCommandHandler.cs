@@ -1,14 +1,17 @@
 ﻿using Application.Abstractions.Authentication;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
+using Domain;
 using Domain.Pets;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel;
 
 namespace Application.Pets.Delete;
 internal sealed class DeletePetCommandHandler(
     IApplicationDbContext context,
-    IUserContext userContext)
+    IUserContext userContext,
+    IPublisher publisher)
     : ICommandHandler<DeletePetCommand>
 {
     public async Task<Result> Handle(DeletePetCommand request, CancellationToken cancellationToken)
@@ -25,8 +28,13 @@ internal sealed class DeletePetCommandHandler(
         {
             return Result.Failure(PetErrors.PetNotOwned);
         }
-
         context.Pets.Remove(pet);
+
+        if (pet.ImagePublicId is not null)
+        {
+            await publisher.Publish(new DeleteEntityHasImageDomainEvent(pet.ImagePublicId), cancellationToken);
+        }
+
         await context.SaveChangesAsync(cancellationToken);
 
         return Result.Success();

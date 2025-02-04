@@ -2,6 +2,7 @@
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
@@ -14,7 +15,7 @@ public sealed class Delete : IEndpoint
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("/api/v{version:apiVersion}/media/delete", async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("/api/v{version:apiVersion}/media/delete", [Authorize] async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new DeleteMediaCommand(request.PublicId);
             Result result = await sender.Send(command, cancellationToken);

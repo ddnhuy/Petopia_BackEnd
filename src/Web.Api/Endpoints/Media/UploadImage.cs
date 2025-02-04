@@ -3,6 +3,7 @@ using Application.Media.Images.Upload;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
 using Web.Api.Extensions;
@@ -14,7 +15,7 @@ public sealed class UploadImage : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("/api/v{version:apiVersion}/media/upload-image", [Consumes("multipart/form-data")] async (HttpContext context, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("/api/v{version:apiVersion}/media/upload-image", [Authorize][Consumes("multipart/form-data")] async (HttpContext context, ISender sender, CancellationToken cancellationToken) =>
         {
             IFormCollection form = await context.Request.ReadFormAsync(cancellationToken);
             IFormFile file = form.Files.Count > 0 ? form.Files["image"] : null;
