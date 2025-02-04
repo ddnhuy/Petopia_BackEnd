@@ -5,7 +5,7 @@ public record Error
     public static readonly Error None = new(string.Empty, string.Empty, ErrorType.Failure);
     public static readonly Error NullValue = new(
         "General.Null",
-        "Null value was provided",
+        "Giá trị Null đã cung cấp không hợp lệ.",
         ErrorType.Failure);
 
     public Error(string code, string description, ErrorType type)

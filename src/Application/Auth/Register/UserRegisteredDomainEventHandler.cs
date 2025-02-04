@@ -15,7 +15,7 @@ internal sealed class UserRegisteredDomainEventHandler(
 {
     public async Task Handle(UserRegisteredDomainEvent notification, CancellationToken cancellationToken)
     {
-        ApplicationUser user = await userManager.FindByIdAsync(notification.UserId) ?? throw new InvalidOperationException("User not found!");
+        ApplicationUser user = await userManager.FindByIdAsync(notification.UserId) ?? throw new InvalidOperationException("Không tìm thấy người dùng.");
 
         if (string.IsNullOrEmpty(user.Email) || user.EmailConfirmed)
         {

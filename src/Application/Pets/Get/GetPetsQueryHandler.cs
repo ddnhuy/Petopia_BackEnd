@@ -24,7 +24,10 @@ internal sealed class GetPetsQueryHandler(
         if (!string.IsNullOrEmpty(cacheData))
         {
             result = JsonConvert.DeserializeObject<(List<PetDto>, int, int)>(cacheData);
-            return Result.Success(result);
+            if (result.petList is not null)
+            {
+                return Result.Success(result);
+            }
         }
 
         List<Pet> pets = await context.Pets
