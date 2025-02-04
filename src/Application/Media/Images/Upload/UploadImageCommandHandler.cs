@@ -14,9 +14,9 @@ internal class UploadImageCommandHandler(
             MediaUploadResultDto uploadResult = await mediaService.UploadImageAsync(command.File, command.publicId);
             return Result.Success(uploadResult);
         }
-        catch (Exception ex)
+        catch
         {
-            return Result.Failure<MediaUploadResultDto>(CommonErrors.InvalidFile(ex.Message));
+            return Result.Failure<MediaUploadResultDto>(CommonErrors.InvalidFile);
         }
     }
 }

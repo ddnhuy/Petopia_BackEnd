@@ -25,7 +25,7 @@ internal sealed class LoginWithThirdPartyCommandHandler(
             {
                 LoginProvider.GOOGLE => await SignInWithGoogle(request.Token),
                 LoginProvider.FACEBOOK => await SignInWithFacebook(request.Token),
-                _ => throw new InvalidDataException("Invalid provider."),
+                _ => throw new InvalidDataException("Nhà cung cấp không hợp lệ."),
             };
 
             if (authProfile is null)
