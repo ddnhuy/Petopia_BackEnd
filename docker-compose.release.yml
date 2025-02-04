@@ -37,6 +37,15 @@ services:
     networks:
       - petopia_backend
 
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: redis
+    ports:
+      - 6379:6379
+    networks:
+      - petopia_backend
+
   seq:
     image: datalust/seq:latest
     container_name: seq

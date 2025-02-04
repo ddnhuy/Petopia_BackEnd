@@ -1,5 +1,4 @@
-﻿using Application.DTOs.User;
-using Application.Users.Update;
+﻿using Application.Media.Delete;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using MediatR;
@@ -8,21 +7,22 @@ using SharedKernel;
 using Web.Api.Extensions;
 using Web.Api.Infrastructure;
 
-namespace Web.Api.Endpoints.Users;
+namespace Web.Api.Endpoints.Media;
 
-internal sealed class Update : IEndpoint
+public sealed class Delete : IEndpoint
 {
+    private sealed record Request(string PublicId);
+
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPut("v{version:apiVersion}/users/update", [Authorize] async (UserUpsertDto user, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("/api/v{version:apiVersion}/media/delete", [Authorize] async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
-            var command = new UpdateUserCommand(user);
-
+            var command = new DeleteMediaCommand(request.PublicId);
             Result result = await sender.Send(command, cancellationToken);
 
             return result.Match(Results.NoContent, CustomResults.Problem);
         })
-        .WithTags(Tags.User)
+        .WithTags(Tags.Media)
         .WithApiVersionSet(apiVersionSet)
         .MapToApiVersion(new ApiVersion(2, 0));
     }

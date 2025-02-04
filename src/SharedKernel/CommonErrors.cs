@@ -12,4 +12,8 @@ public static class CommonErrors
     public static Error InvalidPageSize => Error.Problem(
         "Commons.InvalidPageSize",
         $"Page size is invalid. It must be greater than 0.");
+
+    public static Error InvalidFile(string message) => Error.Problem(
+        "Commons.InvalidFile",
+        message);
 }

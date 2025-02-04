@@ -13,6 +13,8 @@ public sealed class Pet : Entity
     public Gender Gender { get; set; }
     public bool IsSterilized { get; set; }
 
+    public string? ImagePublicId { get; set; }
+
     public ICollection<PetWeight> Weights { get; set; } = [];
     public ICollection<PetVaccination> Vaccinations { get; set; } = [];
 
@@ -27,7 +29,8 @@ public sealed class Pet : Entity
         DateTime birthDate,
         DateTime? deathDate,
         Gender gender,
-        bool isSterilized)
+        bool isSterilized,
+        string? imagePublicId)
     {
         OwnerId = ownerId;
         Type = type;
@@ -38,5 +41,6 @@ public sealed class Pet : Entity
         DeathDate = deathDate;
         Gender = gender;
         IsSterilized = isSterilized;
+        ImagePublicId = imagePublicId;
     }
 }
