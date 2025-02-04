@@ -9,8 +9,8 @@ internal class MapperProfile : Profile
 {
     public MapperProfile()
     {
-        CreateMap<ApplicationUser, UserDto>().ReverseMap()
-            .ForMember(dest => dest.UpdatedAt, opt => opt.MapFrom(_ => DateTime.UtcNow));
+        CreateMap<ApplicationUser, UserDto>().ReverseMap();
+        CreateMap<ApplicationUser, UserUpsertDto>().ReverseMap();
 
         CreateMap<Pet, PetDto>().ReverseMap();
         CreateMap<PetWeight, PetWeightDto>().ReverseMap();
