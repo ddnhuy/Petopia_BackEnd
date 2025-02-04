@@ -13,9 +13,9 @@ internal class DeleteMediaCommandHandler(
             await mediaService.DeleteMediaAsync(command.publicId);
             return Result.Success();
         }
-        catch (Exception ex)
+        catch
         {
-            return Result.Failure(CommonErrors.InvalidFile(ex.Message));
+            return Result.Failure(CommonErrors.InvalidFile);
         }
     }
 }

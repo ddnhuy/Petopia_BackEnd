@@ -6,37 +6,37 @@ public static class UserErrors
 {
     public static Error NotFound(string userId) => Error.NotFound(
         "Users.NotFound",
-        $"The user with the Id = '{userId}' was not found.");
+        $"Người dùng với ID '{userId}' không được tìm thấy.");
 
     public static Error Unauthorized => Error.Problem(
         "Users.Unauthorized",
-        "You are not authorized to perform this action.");
+        "Bạn không có quyền thực hiện hành động này.");
 
     public static readonly Error NotFoundByEmail = Error.NotFound(
         "Users.NotFoundByEmail",
-        "The user with the specified email was not found.");
+        "Người dùng với email được chỉ định không được tìm thấy.");
 
     public static readonly Error EmailNotUnique = Error.Conflict(
         "Users.EmailNotUnique",
-        "The provided username or email is not unique.");
+        "Tên người dùng hoặc email đã được sử dụng.");
 
     public static readonly Error InvalidRefreshToken = Error.Problem(
         "Users.InvalidRefreshToken",
-        "The refesh token is invalid.");
+        "Mã làm mới không hợp lệ.");
 
     public static readonly Error EmailNotConfirmed = Error.Problem(
         "Users.EmailNotConfirmed",
-        "Your email is not confirmed.");
+        "Email của bạn chưa được xác nhận.");
 
     public static readonly Error UserLockedOut = Error.Problem(
         "Users.UserLockedOut",
-        "The user was locked out.");
+        "Người dùng đã bị khóa.");
 
     public static readonly Error InvalidConfirmToken = Error.Problem(
         "Users.InvalidConfirmToken",
-        "The confirmation token is invalid.");
+        "Mã xác nhận không hợp lệ.");
 
     public static readonly Error WrongPassword = Error.Problem(
         "Users.WrongPassword",
-        "You have entered the wrong password.");
+        "Bạn đã nhập sai mật khẩu.");
 }

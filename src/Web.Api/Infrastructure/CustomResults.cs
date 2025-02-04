@@ -25,7 +25,7 @@ public static class CustomResults
                 ErrorType.Problem => error.Code,
                 ErrorType.NotFound => error.Code,
                 ErrorType.Conflict => error.Code,
-                _ => "Server failure"
+                _ => "Lỗi máy chủ."
             };
 
         static string GetDetail(Error error) =>
@@ -35,7 +35,7 @@ public static class CustomResults
                 ErrorType.Problem => error.Description,
                 ErrorType.NotFound => error.Description,
                 ErrorType.Conflict => error.Description,
-                _ => "An unexpected error occurred"
+                _ => "Đã xảy ra lỗi không mong muốn."
             };
 
         static string GetType(ErrorType errorType) =>

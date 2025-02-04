@@ -33,7 +33,7 @@ internal sealed class RegisterUserCommandHandler(IApplicationDbContext context, 
 
         if (!result.Succeeded)
         {
-            throw new ApplicationException($"Unable to create user: {string.Join(", ", result.Errors.Select(e => e.Description))}");
+            throw new ApplicationException($"Không thể tạo người dùng: {string.Join(", ", result.Errors.Select(e => e.Description))}");
         }
 
         await userManager.AddToRoleAsync(newUser, AppRoles.USER);

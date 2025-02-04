@@ -6,9 +6,9 @@ public static class AuthErrors
 {
     public static Error ProblemWhenLoginWithThirdParty(string provider) => Error.Problem(
         "Users.InvalidAccessToken",
-        $"Something went wrong when we try to login using ${provider} account.");
+        $"Có lỗi xảy ra khi chúng tôi thử đăng nhập bằng tài khoản ${provider}.");
 
     public static readonly Error InvalidAccessToken = Error.Problem(
         "Users.InvalidAccessToken",
-        "The access token is invalid.");
+        "Mã thông báo truy cập không hợp lệ.");
 }

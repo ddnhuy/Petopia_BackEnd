@@ -15,7 +15,7 @@ public sealed class Delete : IEndpoint
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("/api/v{version:apiVersion}/media/delete", [Authorize] async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPost("v{version:apiVersion}/media/delete", [Authorize] async (Request request, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new DeleteMediaCommand(request.PublicId);
             Result result = await sender.Send(command, cancellationToken);
