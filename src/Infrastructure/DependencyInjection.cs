@@ -38,6 +38,7 @@ public static class DependencyInjection
         services.AddSingleton<IEmailQueue, EmailQueue>();
         services.AddHostedService<EmailWorker>();
         services.AddTransient<IEmailSender, EmailSender>();
+        services.AddScoped<ICacheService, RedisCacheService>();
 
         IConfigurationSection cloudinarySettings = configuration.GetSection("Cloudinary");
         var cloudinary = new Cloudinary(new Account(
@@ -61,6 +62,12 @@ public static class DependencyInjection
             options => options
                 .UseNpgsql(connectionString, npgsqlOptions =>
                     npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Default)));
+
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetConnectionString("Cache");
+            options.InstanceName = "Petopia";
+        });
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 
