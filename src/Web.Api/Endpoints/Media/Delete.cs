@@ -11,13 +11,11 @@ namespace Web.Api.Endpoints.Media;
 
 public sealed class Delete : IEndpoint
 {
-    private sealed record Request(string PublicId);
-
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPost("v{version:apiVersion}/media/delete", [Authorize] async (Request request, ISender sender, CancellationToken cancellationToken) =>
+        app.MapDelete("v{version:apiVersion}/media/delete/{publicId}", [Authorize] async (string publicId, ISender sender, CancellationToken cancellationToken) =>
         {
-            var command = new DeleteMediaCommand(request.PublicId);
+            var command = new DeleteMediaCommand(publicId);
             Result result = await sender.Send(command, cancellationToken);
 
             return result.Match(Results.NoContent, CustomResults.Problem);
