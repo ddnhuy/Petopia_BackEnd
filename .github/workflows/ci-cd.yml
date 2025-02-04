@@ -26,7 +26,7 @@ jobs:
 
       - name: Run tests
         run: |
-          dotnet test ./tests/ArchitectureTests/ArchitectureTests.csproj --no-build --verbosity normal
+          dotnet test ./tests/ArchitectureTests/ArchitectureTests.csproj
 
       - name: Clean up Docker containers
         run: |
