@@ -13,7 +13,7 @@ namespace Web.Api.Endpoints.Pets;
 
 public sealed class Update : IEndpoint
 {
-    private sealed record Request(Guid Id, PetType Type, string Name, Uri? ImageUrl, string Description, DateTime BirthDate, DateTime? DeathDate, Gender Gender, bool IsSterilized);
+    private sealed record Request(Guid Id, PetType Type, string Name, Uri? ImageUrl, string Description, DateTime BirthDate, DateTime? DeathDate, Gender Gender, bool IsSterilized, string? ImagePublicId);
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
@@ -28,7 +28,8 @@ public sealed class Update : IEndpoint
                 request.BirthDate,
                 request.DeathDate,
                 request.Gender,
-                request.IsSterilized);
+                request.IsSterilized,
+                request.ImagePublicId);
 
             Result result = await sender.Send(command, cancellationToken);
 

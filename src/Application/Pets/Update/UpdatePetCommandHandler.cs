@@ -29,6 +29,7 @@ internal sealed class UpdatePetCommandHandler(
         pet.DeathDate = command.DeathDate;
         pet.Gender = command.Gender;
         pet.IsSterilized = command.IsSterilized;
+        pet.ImagePublicId = command.ImagePublicId;
 
         await context.SaveChangesAsync(cancellationToken);
 

@@ -23,6 +23,13 @@ services:
     ports:
       - 5432:5432
 
+  redis:
+    image: redis:latest
+    restart: always
+    container_name: redis
+    ports:
+      - 6379:6379
+
   seq:
     image: datalust/seq:latest
     container_name: seq

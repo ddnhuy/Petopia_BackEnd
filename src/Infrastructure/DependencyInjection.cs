@@ -3,6 +3,7 @@ using Application.Abstractions.Authentication;
 using Application.Abstractions.Data;
 using Application.Abstractions.Email;
 using Application.Abstractions.Services;
+using CloudinaryDotNet;
 using Domain.Users;
 using Infrastructure.Authentication;
 using Infrastructure.Database;
@@ -26,17 +27,27 @@ public static class DependencyInjection
         this IServiceCollection services,
         IConfiguration configuration) =>
         services
-            .AddServices()
+            .AddServices(configuration)
             .AddDatabase(configuration)
             .AddHealthChecks(configuration)
             .AddAuthenticationInternal(configuration)
             .AddAuthorizationInternal();
 
-    private static IServiceCollection AddServices(this IServiceCollection services)
+    private static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddSingleton<IEmailQueue, EmailQueue>();
         services.AddHostedService<EmailWorker>();
         services.AddTransient<IEmailSender, EmailSender>();
+        services.AddScoped<ICacheService, RedisCacheService>();
+
+        IConfigurationSection cloudinarySettings = configuration.GetSection("Cloudinary");
+        var cloudinary = new Cloudinary(new Account(
+            cloudinarySettings["CloudName"],
+            cloudinarySettings["ApiKey"],
+            cloudinarySettings["ApiSecret"]
+        ));
+        services.AddSingleton(cloudinary);
+        services.AddScoped<IMediaService, MediaService>();
 
         services.AddHttpClient();
 
@@ -51,6 +62,12 @@ public static class DependencyInjection
             options => options
                 .UseNpgsql(connectionString, npgsqlOptions =>
                     npgsqlOptions.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemas.Default)));
+
+        services.AddStackExchangeRedisCache(options =>
+        {
+            options.Configuration = configuration.GetConnectionString("Cache");
+            options.InstanceName = "Petopia";
+        });
 
         services.AddScoped<IApplicationDbContext>(sp => sp.GetRequiredService<ApplicationDbContext>());
 

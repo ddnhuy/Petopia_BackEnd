@@ -12,7 +12,7 @@ namespace Web.Api.Endpoints.Pets;
 
 public sealed class Create : IEndpoint
 {
-    private sealed record Request(PetType Type, string Name, Uri? ImageUrl, string Description, DateTime BirthDate, Gender Gender, bool IsSterilized);
+    private sealed record Request(PetType Type, string Name, Uri? ImageUrl, string Description, DateTime BirthDate, Gender Gender, bool IsSterilized, string? ImagePublicId);
 
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
@@ -25,7 +25,8 @@ public sealed class Create : IEndpoint
                 request.Description,
                 request.BirthDate,
                 request.Gender,
-                request.IsSterilized);
+                request.IsSterilized,
+                request.ImagePublicId);
 
             Result result = await sender.Send(command, cancellationToken);
 
