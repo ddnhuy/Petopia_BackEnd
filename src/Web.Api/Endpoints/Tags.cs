@@ -8,4 +8,6 @@ public static class Tags
     public const string Pet = "Pets";
     public const string PetWeight = "Pet Weights";
     public const string PetVaccination = "Pet Vaccinations";
+
+    public const string Media = "Media";
 }
