@@ -26,8 +26,4 @@
 	<InternalsVisibleTo Include="Application.UnitTests" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Media\Images\Delete\" />
-  </ItemGroup>
-
 </Project>

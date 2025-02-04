@@ -43,11 +43,14 @@ internal sealed class MediaService(
         throw new NotImplementedException("Chức năng chưa hỗ trợ.");
     }
 
-    public async Task<bool> DeleteMediaAsync(string publicId)
+    public async Task DeleteMediaAsync(string publicId)
     {
-        var deleteParams = new DeletionParams(publicId);
+        var deleteParams = new DeletionParams($"petopia/{publicId}");
         DeletionResult deleteResult = await cloudinary.DestroyAsync(deleteParams);
 
-        return deleteResult.Result == "ok";
+        if (deleteResult.Result != "ok")
+        {
+            throw new InvalidOperationException("Chúng tôi gặp vấn đề khi đang cố gắng xoá thông tin của bạn. Vui lòng thử lại.");
+        }
     }
 }

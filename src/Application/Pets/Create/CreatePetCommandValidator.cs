@@ -21,6 +21,5 @@ public class CreatePetCommandValidator : AbstractValidator<CreatePetCommand>
             .IsInEnum()
             .WithErrorCode("Pets.InvalidPetGender")
             .WithMessage("Pet gender not found.");
-        RuleFor(p => p.IsSterilized).NotEmpty();
     }
 }
