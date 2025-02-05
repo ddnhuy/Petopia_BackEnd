@@ -10,7 +10,6 @@ internal class MapperProfile : Profile
     public MapperProfile()
     {
         CreateMap<ApplicationUser, UserDto>().ReverseMap();
-        CreateMap<ApplicationUser, UserUpsertDto>().ReverseMap();
 
         CreateMap<Pet, PetDto>().ReverseMap();
         CreateMap<PetWeight, PetWeightDto>().ReverseMap();

@@ -14,7 +14,7 @@ internal sealed class Update : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapPut("v{version:apiVersion}/users/update", [Authorize] async (UserUpsertDto user, ISender sender, CancellationToken cancellationToken) =>
+        app.MapPut("v{version:apiVersion}/users/update", [Authorize] async (UserDto user, ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new UpdateUserCommand(user);
 
