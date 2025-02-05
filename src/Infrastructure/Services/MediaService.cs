@@ -23,7 +23,7 @@ internal sealed class MediaService(
         var uploadParams = new ImageUploadParams
         {
             File = new FileDescription(file.FileName, stream),
-            PublicId = publicId ?? Guid.NewGuid().ToString(),
+            PublicId = string.IsNullOrEmpty(publicId) ? Guid.NewGuid().ToString() : publicId,
             Folder = "petopia",
             UniqueFilename = false,
             Overwrite = true

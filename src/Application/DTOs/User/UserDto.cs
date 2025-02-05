@@ -12,4 +12,5 @@ public sealed record UserDto
     public string LastName { get; init; }
 
     public string? ImageUrl { get; set; }
+    public string? ImagePublicId { get; set; }
 }
