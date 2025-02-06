@@ -10,4 +10,5 @@ public static class Tags
     public const string PetVaccination = "Pet Vaccinations";
 
     public const string Media = "Media";
+    public const string Static = "Static Information";
 }
