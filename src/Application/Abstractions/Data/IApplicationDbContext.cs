@@ -1,5 +1,6 @@
 ﻿using System.Linq.Expressions;
 using Domain.Auths;
+using Domain.PetAlerts;
 using Domain.Pets;
 using Domain.Todos;
 using Domain.Users;
@@ -18,6 +19,8 @@ public interface IApplicationDbContext
     DbSet<Pet> Pets { get; }
     DbSet<PetWeight> PetWeights { get; }
     DbSet<PetVaccination> PetVaccinations { get; }
+
+    DbSet<PetAlert> PetAlerts { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task<int> ExecuteDeleteAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) where TEntity : class;

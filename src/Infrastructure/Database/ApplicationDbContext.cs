@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using Application.Abstractions.Data;
 using Domain.Auths;
+using Domain.PetAlerts;
 using Domain.Pets;
 using Domain.Todos;
 using Domain.Users;
@@ -24,6 +25,8 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<Pet> Pets { get; set; }
     public DbSet<PetWeight> PetWeights { get; set; }
     public DbSet<PetVaccination> PetVaccinations { get; set; }
+
+    public DbSet<PetAlert> PetAlerts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
