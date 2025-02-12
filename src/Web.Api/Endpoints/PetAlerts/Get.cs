@@ -1,7 +1,7 @@
-﻿using Application.PetAlerts.Get;
+﻿using Application.DTOs.PetAlert;
+using Application.PetAlerts.Get;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
-using Domain.PetAlerts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
@@ -18,7 +18,7 @@ public sealed class Get : IEndpoint
         {
             var query = new GetPetAlertsQuery(page, pageSize);
 
-            Result<(List<PetAlert> petList, int totalPages, int totalItems)> result = await sender.Send(query, cancellationToken);
+            Result<(List<PetAlertDto> petList, int totalPages, int totalItems)> result = await sender.Send(query, cancellationToken);
 
             return result.Match(
                 success => Results.Ok(new

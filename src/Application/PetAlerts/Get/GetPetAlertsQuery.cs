@@ -1,5 +1,5 @@
 ﻿using Application.Abstractions.Messaging;
-using Domain.PetAlerts;
+using Application.DTOs.PetAlert;
 
 namespace Application.PetAlerts.Get;
-public sealed record GetPetAlertsQuery(int Page, int PageSize) : IQuery<(List<PetAlert>, int, int)>;
+public sealed record GetPetAlertsQuery(int Page, int PageSize) : IQuery<(List<PetAlertDto>, int, int)>;
