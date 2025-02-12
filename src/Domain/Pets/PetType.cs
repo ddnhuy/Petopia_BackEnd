@@ -13,7 +13,7 @@ public enum PetType
     Fish,
     [Display(Name = "Thỏ")]
     Rabbit,
-    [Display(Name = "Chuột Hamster")]
+    [Display(Name = "Hamster")]
     Hamster,
     [Display(Name = "Rùa")]
     Turtle,
