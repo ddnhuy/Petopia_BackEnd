@@ -1,7 +1,7 @@
-﻿using Application.PetAlerts.GetById;
+﻿using Application.DTOs.PetAlert;
+using Application.PetAlerts.GetById;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
-using Domain.PetAlerts;
 using MediatR;
 using SharedKernel;
 using Web.Api.Extensions;
@@ -17,7 +17,7 @@ public sealed class GetById : IEndpoint
         {
             var query = new GetPetAlertByIdQuery(petAlertId);
 
-            Result<PetAlert> result = await sender.Send(query, cancellationToken);
+            Result<PetAlertDto> result = await sender.Send(query, cancellationToken);
 
             return result.Match(Results.Ok, CustomResults.Problem);
         })

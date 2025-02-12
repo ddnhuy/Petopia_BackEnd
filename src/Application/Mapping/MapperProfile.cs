@@ -1,6 +1,8 @@
 ﻿using Application.DTOs.Pet;
+using Application.DTOs.PetAlert;
 using Application.DTOs.User;
 using AutoMapper;
+using Domain.PetAlerts;
 using Domain.Pets;
 using Domain.Users;
 
@@ -14,5 +16,6 @@ internal class MapperProfile : Profile
         CreateMap<Pet, PetDto>().ReverseMap();
         CreateMap<PetWeight, PetWeightDto>().ReverseMap();
         CreateMap<PetVaccination, PetVaccinationDto>().ReverseMap();
+        CreateMap<PetAlert, PetAlertDto>().ReverseMap();
     }
 }
