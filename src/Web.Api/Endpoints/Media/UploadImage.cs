@@ -22,12 +22,12 @@ public sealed class UploadImage : IEndpoint
 
             if (file is null)
             {
-                return Results.BadRequest("Không có ảnh nào được tải lên.");
+                return CustomResults.Problem(Result.Failure(CommonErrors.FileNotFound));
             }
 
             if (file.Length > 10 * 1024 * 1024)
             {
-                return Results.BadRequest("Kích thước tệp tải lên không được vượt quá 10MB.");
+                return CustomResults.Problem(Result.Failure(CommonErrors.InvalidFileSize(5)));
             }
 
             string? publicId = form["publicId"].ToString();
