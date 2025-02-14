@@ -13,7 +13,19 @@ public static class CommonErrors
         "Commons.InvalidPageSize",
         $"Kích thước trang không hợp lệ. Nó phải lớn hơn 0.");
 
+    public static Error FileNotFound => Error.Problem(
+        "Commons.FileNotFound",
+        "Tệp tin không tồn tại.");
+
     public static Error InvalidFile => Error.Problem(
         "Commons.InvalidFile",
         "Tệp tin không hợp lệ.");
+
+    public static Error InvalidFileSize(int maxSize) => Error.Problem(
+        "Commons.InvalidFileSize",
+        $"Kích thước tệp tin không được vượt quá {maxSize}MB.");
+
+    public static Error InvalidFileExtension(string[] allowedExtensions) => Error.Problem(
+        "Commons.InvalidFileExtension",
+        $"Phần mở rộng của tệp tin không hợp lệ. Chỉ chấp nhận các phần mở rộng sau: {string.Join(", ", allowedExtensions)}.");
 }
