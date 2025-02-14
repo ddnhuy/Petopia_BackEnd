@@ -8,7 +8,7 @@ public class CreatePetCommandValidator : AbstractValidator<CreatePetCommand>
         RuleFor(p => p.Type)
             .IsInEnum()
             .WithErrorCode("Pets.InvalidPetType")
-            .WithMessage("Pet type not found.");
+            .WithMessage("Không tìm thấy loại thú cưng.");
         RuleFor(p => p.Name).NotEmpty();
         RuleFor(p => p.ImageUrl).Must(p => p is null or { IsAbsoluteUri: true });
         RuleFor(p => p.Description).NotEmpty();
@@ -16,10 +16,10 @@ public class CreatePetCommandValidator : AbstractValidator<CreatePetCommand>
             .NotEmpty()
             .LessThan(DateTime.Now)
             .WithErrorCode("Pets.InvalidPetBirthDate")
-            .WithMessage("Birth date must be less than or equal to the current date.");
+            .WithMessage("Ngày sinh phải nhỏ hơn hoặc bằng ngày hiện tại.");
         RuleFor(p => p.Gender)
             .IsInEnum()
             .WithErrorCode("Pets.InvalidPetGender")
-            .WithMessage("Pet gender not found.");
+            .WithMessage("Không tìm thấy giới tính của thú cưng.");
     }
 }
