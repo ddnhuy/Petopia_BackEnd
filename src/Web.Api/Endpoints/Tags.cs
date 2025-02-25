@@ -12,4 +12,6 @@ public static class Tags
 
     public const string Media = "Media";
     public const string Static = "Static Information";
+
+    public const string Post = "Posts";
 }

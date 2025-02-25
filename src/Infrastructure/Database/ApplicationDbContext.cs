@@ -4,6 +4,7 @@ using Application.Abstractions.Data;
 using Domain.Auths;
 using Domain.PetAlerts;
 using Domain.Pets;
+using Domain.Posts;
 using Domain.Todos;
 using Domain.Users;
 using MediatR;
@@ -27,6 +28,8 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<PetVaccination> PetVaccinations { get; set; }
 
     public DbSet<PetAlert> PetAlerts { get; set; }
+
+    public DbSet<Post> Posts { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

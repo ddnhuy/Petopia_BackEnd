@@ -2,6 +2,7 @@
 using Domain.Auths;
 using Domain.PetAlerts;
 using Domain.Pets;
+using Domain.Posts;
 using Domain.Todos;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +22,8 @@ public interface IApplicationDbContext
     DbSet<PetVaccination> PetVaccinations { get; }
 
     DbSet<PetAlert> PetAlerts { get; }
+
+    DbSet<Post> Posts { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task<int> ExecuteDeleteAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) where TEntity : class;
