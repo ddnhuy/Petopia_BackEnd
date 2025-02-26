@@ -1,4 +1,5 @@
 ﻿using Application.Abstractions.Behaviors;
+using Application.LanguageManagers;
 using Application.Mapping;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,6 +21,8 @@ public static class DependencyInjection
         services.AddValidatorsFromAssembly(typeof(DependencyInjection).Assembly, includeInternalTypes: true);
 
         services.AddAutoMapper(typeof(MapperProfile));
+
+        ValidatorOptions.Global.LanguageManager = new VietnameseLanguageManager();
 
         return services;
     }

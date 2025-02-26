@@ -30,7 +30,7 @@ internal sealed class DeletePetCommandHandler(
         }
         context.Pets.Remove(pet);
 
-        if (pet.ImagePublicId is not null)
+        if (!string.IsNullOrEmpty(pet.ImagePublicId))
         {
             await publisher.Publish(new DeleteEntityHasImageDomainEvent(pet.ImagePublicId), cancellationToken);
         }

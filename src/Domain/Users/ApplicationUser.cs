@@ -1,4 +1,5 @@
 ﻿using Domain.Pets;
+using Domain.Posts;
 using Microsoft.AspNetCore.Identity;
 
 namespace Domain.Users;
@@ -13,6 +14,7 @@ public sealed class ApplicationUser : IdentityUser
     public string? ImagePublicId { get; set; }
 
     public ICollection<Pet> Pets { get; set; } = [];
+    public ICollection<Post> Posts { get; set; } = [];
 
     public string FullName() => $"{FirstName} {LastName}";
 
