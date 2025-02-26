@@ -2,8 +2,11 @@
 
   <ItemGroup>
     <Compile Remove="PetWeights\GetByPetId\**" />
+    <Compile Remove="Reaction\**" />
     <EmbeddedResource Remove="PetWeights\GetByPetId\**" />
+    <EmbeddedResource Remove="Reaction\**" />
     <None Remove="PetWeights\GetByPetId\**" />
+    <None Remove="Reaction\**" />
   </ItemGroup>
 
   <ItemGroup>
