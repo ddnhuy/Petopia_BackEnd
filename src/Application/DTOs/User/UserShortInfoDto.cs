@@ -7,5 +7,5 @@ public sealed record UserShortInfoDto
 
     public string FullName { get; init; }
 
-    public string? ImageUrl { get; set; }
+    public Uri? ImageUrl { get; set; }
 }

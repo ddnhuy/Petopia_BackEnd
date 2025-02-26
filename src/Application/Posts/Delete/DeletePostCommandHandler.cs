@@ -2,7 +2,6 @@
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Domain;
-using Domain.Pets;
 using Domain.Posts;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -15,19 +14,19 @@ internal sealed class DeletePostCommandHandler(
     IPublisher publisher)
     : ICommandHandler<DeletePostCommand>
 {
-    public async Task<Result> Handle(DeletePostCommand request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(DeletePostCommand command, CancellationToken cancellationToken)
     {
         Post? post = await context.Posts
-            .SingleOrDefaultAsync(p => p.Id == request.PostId, cancellationToken);
+            .SingleOrDefaultAsync(p => p.Id == command.PostId, cancellationToken);
 
         if (post is null)
         {
-            return Result.Failure(PetErrors.PetNotFound);
+            return Result.Failure(PostErrors.PostNotFound);
         }
 
         if (post.UserId != userContext.UserId)
         {
-            return Result.Failure(PetErrors.PetNotOwned);
+            return Result.Failure(PostErrors.PostNotHavePermission);
         }
         context.Posts.Remove(post);
 

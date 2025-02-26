@@ -1,4 +1,5 @@
-﻿using Domain.Users;
+﻿using Domain.Comments;
+using Domain.Users;
 using SharedKernel;
 
 namespace Domain.Posts;
@@ -12,6 +13,7 @@ public sealed class Post : Entity
     public string? ImagePublicId { get; set; }
 
     public ApplicationUser User { get; set; }
+    public ICollection<Comment> Comments { get; set; } = [];
 
     public Post(string userId, string caption, string hashTag, Uri imageUrl, string imagePublicId)
     {

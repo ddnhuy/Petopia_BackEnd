@@ -2,9 +2,11 @@
 using System.Linq.Expressions;
 using Application.Abstractions.Data;
 using Domain.Auths;
+using Domain.Comments;
 using Domain.PetAlerts;
 using Domain.Pets;
 using Domain.Posts;
+using Domain.Reactions;
 using Domain.Todos;
 using Domain.Users;
 using MediatR;
@@ -30,6 +32,8 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<PetAlert> PetAlerts { get; set; }
 
     public DbSet<Post> Posts { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<Reaction> Reactions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

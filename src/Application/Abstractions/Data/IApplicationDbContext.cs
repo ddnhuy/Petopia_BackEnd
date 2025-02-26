@@ -1,8 +1,10 @@
 ﻿using System.Linq.Expressions;
 using Domain.Auths;
+using Domain.Comments;
 using Domain.PetAlerts;
 using Domain.Pets;
 using Domain.Posts;
+using Domain.Reactions;
 using Domain.Todos;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +26,8 @@ public interface IApplicationDbContext
     DbSet<PetAlert> PetAlerts { get; }
 
     DbSet<Post> Posts { get; }
+    DbSet<Comment> Comments { get; }
+    DbSet<Reaction> Reactions { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task<int> ExecuteDeleteAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) where TEntity : class;

@@ -12,4 +12,8 @@ public sealed class PostDto
     public string? ImagePublicId { get; set; }
 
     public UserShortInfoDto User { get; set; }
+
+    public bool IsLiked { get; set; }
+    public int TotalReactions { get; set; }
+    public int TotalComments { get; set; }
 }
