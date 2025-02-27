@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.Post;
 using Application.Posts.Get;
+using Application.Posts.GetByUserId;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using MediatR;
@@ -14,11 +15,11 @@ public sealed class Get : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapGet("v{version:apiVersion}/posts", async ([FromQuery] int page, [FromQuery] int pageSize, ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("v{version:apiVersion}/posts", async ([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? userId, ISender sender, CancellationToken cancellationToken) =>
         {
-            var query = new GetPostsQuery(page, pageSize);
-
-            Result<(List<PostDto> postList, int totalPages, int totalItems)> result = await sender.Send(query, cancellationToken);
+            Result<(List<PostDto> postList, int totalPages, int totalItems)> result = string.IsNullOrEmpty(userId)
+                ? await sender.Send(new GetPostsQuery(page, pageSize), cancellationToken)
+                : await sender.Send(new GetPostsByUserIdQuery(page, pageSize, userId), cancellationToken);
 
             return result.Match(
                 success => Results.Ok(new

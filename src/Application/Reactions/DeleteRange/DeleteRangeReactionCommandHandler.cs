@@ -20,15 +20,16 @@ internal sealed class DeleteRangeReactionCommandHandler(
 
         string userId = userContext.UserId;
 
-        var targetSet = command.TargetList.Select(t => new { t.TargetId, t.TargetType }).ToHashSet();
+        var targetIds = command.TargetList.Select(t => t.TargetId).ToHashSet();
+        var targetTypes = command.TargetList.Select(t => t.TargetType).ToHashSet();
 
-        List<Reaction> reactionList = await context.Reactions
-            .Where(r => r.UserId == userId && targetSet.Contains(new { r.TargetId, r.TargetType }))
+        List<Reaction> reactionsToDelete = await context.Reactions
+            .Where(r => r.UserId == userId && targetIds.Contains(r.TargetId) && targetTypes.Contains(r.TargetType))
             .ToListAsync(cancellationToken);
 
-        if (reactionList.Any())
+        if (reactionsToDelete.Count > 0)
         {
-            context.Reactions.RemoveRange(reactionList);
+            context.Reactions.RemoveRange(reactionsToDelete);
             await context.SaveChangesAsync(cancellationToken);
         }
 

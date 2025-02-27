@@ -7,7 +7,7 @@ internal sealed class ReactionConfiguration : IEntityTypeConfiguration<Reaction>
 {
     public void Configure(EntityTypeBuilder<Reaction> builder)
     {
-        builder.HasKey(r => new { r.UserId, r.TargetId });
+        builder.HasKey(r => r.Id);
 
         builder.HasOne(r => r.User)
             .WithMany()

@@ -1,6 +1,5 @@
 ﻿using Application.DTOs;
-using Application.Statics.GetNotificationTypes;
-using Application.Statics.GetPetTypes;
+using Application.Statics.GetReactionTargetTypes;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using MediatR;
@@ -10,13 +9,13 @@ using Web.Api.Infrastructure;
 
 namespace Web.Api.Endpoints.Statics;
 
-public sealed class PetTypes : IEndpoint
+public sealed class ReactionTargetTypes : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapGet("v{version:apiVersion}/pet-types", async (ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("v{version:apiVersion}/reaction-target-types", async (ISender sender, CancellationToken cancellationToken) =>
         {
-            GetPetTypesQuery query = new();
+            GetReactionTargetTypesQuery query = new();
             Result<List<StaticTypeDto>> result = await sender.Send(query, cancellationToken);
             return result.Match(Results.Ok, CustomResults.Problem);
         })
