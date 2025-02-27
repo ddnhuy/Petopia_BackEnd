@@ -31,7 +31,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Notifications\" />
     <Folder Include="PetAlerts\Update\" />
+    <Folder Include="Pets\GetPetType\" />
+    <Folder Include="Reactions\GetReactionType\" />
   </ItemGroup>
 
 </Project>
