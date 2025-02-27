@@ -8,10 +8,6 @@ internal class CreatePostCommandValidator : AbstractValidator<CreatePostCommand>
         RuleFor(x => x.Caption)
             .NotEmpty();
 
-        RuleFor(x => x.HashTag)
-            .NotEmpty()
-            .MaximumLength(100);
-
         RuleFor(x => x.ImageUrl)
             .NotEmpty();
 

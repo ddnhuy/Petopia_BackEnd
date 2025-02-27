@@ -19,15 +19,29 @@ internal sealed class CreateRangeReactionCommandHandler(
 
         string userId = userContext.UserId;
 
-        var reactionList = new List<Reaction>();
-        foreach (ReactionDto target in command.TargetList)
+        var targetIds = command.TargetList.Select(t => t.TargetId).ToHashSet();
+        var targetTypes = command.TargetList.Select(t => t.TargetType).ToHashSet();
+
+        var existingReactions = context.Reactions
+            .Where(r => r.UserId == userId && targetIds.Contains(r.TargetId) && targetTypes.Contains(r.TargetType))
+            .Select(r => new { r.TargetId, r.TargetType })
+            .ToHashSet();
+
+        var newReactions = command.TargetList
+            .Where(t => !existingReactions.Any(e => e.TargetId == t.TargetId && e.TargetType == t.TargetType))
+            .Select(t => new Reaction(t.TargetType, userId, t.TargetId))
+            .ToList();
+
+        if (newReactions.Count > 0)
         {
-            reactionList.Add(new Reaction(target.TargetType, userId, target.TargetId));
+            foreach (Reaction reaction in newReactions)
+            {
+                reaction.Raise(new ReactionCreatedDomainEvent(reaction));
+            }
+
+            await context.Reactions.AddRangeAsync(newReactions, cancellationToken);
+            await context.SaveChangesAsync(cancellationToken);
         }
-
-        await context.Reactions.AddRangeAsync(reactionList, cancellationToken);
-
-        await context.SaveChangesAsync(cancellationToken);
 
         return Result.Success();
     }

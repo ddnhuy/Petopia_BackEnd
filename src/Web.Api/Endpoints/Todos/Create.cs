@@ -39,7 +39,7 @@ internal sealed class Create : IEndpoint
         })
         .WithTags(Tags.Todo)
         .WithApiVersionSet(apiVersionSet)
-        .MapToApiVersion(new ApiVersion(2, 0))
+        .MapToApiVersion(new ApiVersion(1, 0))
         .RequireAuthorization();
     }
 }

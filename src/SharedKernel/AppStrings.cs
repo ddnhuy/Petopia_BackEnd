@@ -26,4 +26,10 @@ public static class AppStrings
         string gender = petGender switch { Gender.Male => "chú", Gender.Female => "nàng", _ => "chú" };
         return $"Thú cưng tên {petName} đã được nhìn thấy lần cuối vào lúc {lastSeen:HH:mm}, ngày {lastSeen:dd-MM-yyyy}, tại: {address.Trim()}. Nếu bạn nhìn thấy {gender + " " + petType.ToLower(System.Globalization.CultureInfo.CurrentCulture)} này, vui lòng liên hệ số điện thoại: {phoneNumber}. Xin trân trọng cảm ơn.";
     }
+
+    public const string NotificationTitle = "🎉 Bạn có thông báo mới!";
+    public static string NotificationContent(string content)
+    {
+        return content;
+    }
 }

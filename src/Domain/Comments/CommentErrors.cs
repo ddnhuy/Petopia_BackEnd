@@ -10,4 +10,8 @@ public static class CommentErrors
     public static Error CommentNotHavePermission => Error.Problem(
         "Comments.CommentNotHavePermission",
         "Bạn không có quyền thực hiện hành động này.");
+
+    public static Error PostNotFound => Error.Problem(
+        "Comments.PostNotFound",
+        "Bài đăng đã bị xoá hoặc không tồn tại.");
 }

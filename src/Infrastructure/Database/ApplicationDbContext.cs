@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using Application.Abstractions.Data;
 using Domain.Auths;
 using Domain.Comments;
+using Domain.Notifications;
 using Domain.PetAlerts;
 using Domain.Pets;
 using Domain.Posts;
@@ -34,6 +35,8 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<Post> Posts { get; set; }
     public DbSet<Comment> Comments { get; set; }
     public DbSet<Reaction> Reactions { get; set; }
+
+    public DbSet<Notification> Notifications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

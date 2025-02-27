@@ -1,11 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="PetAlerts\Update\**" />
+    <Compile Remove="Pets\GetPetType\**" />
     <Compile Remove="PetWeights\GetByPetId\**" />
+    <Compile Remove="Reactions\GetReactionType\**" />
     <Compile Remove="Reaction\**" />
+    <EmbeddedResource Remove="PetAlerts\Update\**" />
+    <EmbeddedResource Remove="Pets\GetPetType\**" />
     <EmbeddedResource Remove="PetWeights\GetByPetId\**" />
+    <EmbeddedResource Remove="Reactions\GetReactionType\**" />
     <EmbeddedResource Remove="Reaction\**" />
+    <None Remove="PetAlerts\Update\**" />
+    <None Remove="Pets\GetPetType\**" />
     <None Remove="PetWeights\GetByPetId\**" />
+    <None Remove="Reactions\GetReactionType\**" />
     <None Remove="Reaction\**" />
   </ItemGroup>
 
@@ -28,10 +37,6 @@
 
   <ItemGroup>
 	<InternalsVisibleTo Include="Application.UnitTests" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="PetAlerts\Update\" />
   </ItemGroup>
 
 </Project>
