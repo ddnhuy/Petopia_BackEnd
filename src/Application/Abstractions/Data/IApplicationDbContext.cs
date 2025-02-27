@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Domain.Auths;
 using Domain.Comments;
+using Domain.Notifications;
 using Domain.PetAlerts;
 using Domain.Pets;
 using Domain.Posts;
@@ -28,6 +29,8 @@ public interface IApplicationDbContext
     DbSet<Post> Posts { get; }
     DbSet<Comment> Comments { get; }
     DbSet<Reaction> Reactions { get; }
+
+    DbSet<Notification> Notifications { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task<int> ExecuteDeleteAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) where TEntity : class;

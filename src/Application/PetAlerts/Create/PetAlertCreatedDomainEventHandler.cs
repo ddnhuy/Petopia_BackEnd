@@ -1,10 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using System.Text;
-using System.Text.Json.Nodes;
-using Application.DTOs.Pet;
+﻿using System.Text;
 using Domain.PetAlerts;
-using Domain.Pets;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;

@@ -1,13 +1,17 @@
 ﻿using Application.DTOs.Comment;
+using Application.DTOs.Notification;
 using Application.DTOs.Pet;
 using Application.DTOs.PetAlert;
 using Application.DTOs.Post;
+using Application.DTOs.Reaction;
 using Application.DTOs.User;
 using AutoMapper;
 using Domain.Comments;
+using Domain.Notifications;
 using Domain.PetAlerts;
 using Domain.Pets;
 using Domain.Posts;
+using Domain.Reactions;
 using Domain.Users;
 
 namespace Application.Mapping;
@@ -27,5 +31,8 @@ internal class MapperProfile : Profile
 
         CreateMap<Post, PostDto>().ReverseMap();
         CreateMap<Comment, CommentDto>().ReverseMap();
+        CreateMap<Reaction, ReactionDto>().ReverseMap();
+
+        CreateMap<Notification, NotificationDto>().ReverseMap();
     }
 }

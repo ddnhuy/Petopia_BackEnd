@@ -16,4 +16,6 @@ public static class Tags
     public const string Post = "Posts";
     public const string Comment = "Comments";
     public const string Reaction = "Reactions";
+
+    public const string Notification = "Notifications";
 }

@@ -1,5 +1,6 @@
-﻿using Application.DTOs.Pet;
-using Application.Pets.GetPetType;
+﻿using Application.DTOs;
+using Application.Statics.GetNotificationTypes;
+using Application.Statics.GetPetTypes;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
 using MediatR;
@@ -16,7 +17,7 @@ public sealed class PetTypes : IEndpoint
         app.MapGet("v{version:apiVersion}/pet-types", async (ISender sender, CancellationToken cancellationToken) =>
         {
             GetPetTypesQuery query = new();
-            Result<List<PetTypeDto>> result = await sender.Send(query, cancellationToken);
+            Result<List<StaticTypeDto>> result = await sender.Send(query, cancellationToken);
             return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Static)
