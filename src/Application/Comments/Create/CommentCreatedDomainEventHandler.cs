@@ -22,46 +22,52 @@ internal sealed class CommentCreatedDomainEventHandler(
         string notiTitle = AppStrings.NotificationTitle;
         string notiContent = AppStrings.NotificationContent("Bài đăng của bạn có bình luận mới.");
 
-        HttpClient client = httpClientFactory.CreateClient("OneSignal");
-
-        var jsonObject = new OneSignalRequest
-        {
-            AppId = configuration["OneSignal:AppId"]!,
-            Headings = new Dictionary<string, string>
-            {
-                { "en", notiTitle }
-            },
-            Contents = new Dictionary<string, string>
-            {
-                { "en", notiContent }
-            },
-            IncludedSegments = new List<string> { "All" },
-            Url = configuration["OneSignal:AppUrl"]! + "Notifications",
-            TargetChannel = "push",
-            AndroidGroup = "notifications",
-            LargeIcon = configuration["OneSignal:AppIcon"]!,
-            SmallIcon = configuration["OneSignal:AppIcon"]!,
-            ChromeWebImage = configuration["OneSignal:AppIcon"]!
-        };
-
-        string json = JsonConvert.SerializeObject(jsonObject, new JsonSerializerSettings
-        {
-            ContractResolver = new DefaultContractResolver
-            {
-                NamingStrategy = new SnakeCaseNamingStrategy()
-            },
-            Formatting = Formatting.Indented,
-            NullValueHandling = NullValueHandling.Ignore,
-            ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-        });
-        using var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        await client.PostAsync("notifications?c=push", content, cancellationToken).ConfigureAwait(false);
-
         Post post = await context.Posts.FirstAsync(p => p.Id == notification.Comment.PostId, cancellationToken);
         Notification newNotification = new(post.UserId, notiTitle, notiContent, post.Id, NotificationType.NewComment);
 
         await context.Notifications.AddAsync(newNotification, cancellationToken);
         await context.SaveChangesAsync(cancellationToken);
+
+        NotificationSubscription? subscription = await context.NotificationSubscriptions
+            .FirstOrDefaultAsync(s => s.UserId == newNotification.UserId, cancellationToken);
+
+        if (subscription is not null)
+        {
+            HttpClient client = httpClientFactory.CreateClient("OneSignal");
+
+            var jsonObject = new OneSignalRequest
+            {
+                AppId = configuration["OneSignal:AppId"]!,
+                Headings = new Dictionary<string, string>
+            {
+                { "en", notiTitle }
+            },
+                Contents = new Dictionary<string, string>
+            {
+                { "en", notiContent }
+            },
+                IncludeSubscriptionIds = new List<string> { subscription.SubscriptionId },
+                Url = configuration["OneSignal:AppUrl"]! + "Notifications",
+                TargetChannel = "push",
+                AndroidGroup = "notifications",
+                LargeIcon = configuration["OneSignal:AppIcon"]!,
+                SmallIcon = configuration["OneSignal:AppIcon"]!,
+                ChromeWebImage = configuration["OneSignal:AppIcon"]!
+            };
+
+            string json = JsonConvert.SerializeObject(jsonObject, new JsonSerializerSettings
+            {
+                ContractResolver = new DefaultContractResolver
+                {
+                    NamingStrategy = new SnakeCaseNamingStrategy()
+                },
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+            });
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            await client.PostAsync("notifications?c=push", content, cancellationToken).ConfigureAwait(false);
+        }
     }
 }

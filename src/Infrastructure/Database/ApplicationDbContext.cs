@@ -37,6 +37,7 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<Reaction> Reactions { get; set; }
 
     public DbSet<Notification> Notifications { get; set; }
+    public DbSet<NotificationSubscription> NotificationSubscriptions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
