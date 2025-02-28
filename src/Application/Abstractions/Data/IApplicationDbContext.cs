@@ -31,6 +31,7 @@ public interface IApplicationDbContext
     DbSet<Reaction> Reactions { get; }
 
     DbSet<Notification> Notifications { get; }
+    DbSet<NotificationSubscription> NotificationSubscriptions { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task<int> ExecuteDeleteAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) where TEntity : class;
