@@ -38,7 +38,7 @@ internal sealed class GetCommentsByPostIdQueryHandler(
 
         if (commentList is null || commentList.Count == 0)
         {
-            return Result.Failure<List<CommentDto>>(CommentErrors.CommentNotFound);
+            return Result.Success(new List<CommentDto>());
         }
 
         result = mapper.Map<List<CommentDto>>(commentList);
