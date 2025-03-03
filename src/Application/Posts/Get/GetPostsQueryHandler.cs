@@ -2,6 +2,7 @@
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
 using Application.Abstractions.Services;
+using Application.DTOs;
 using Application.DTOs.Post;
 using Application.DTOs.User;
 using AutoMapper;
@@ -20,18 +21,23 @@ internal sealed class GetPostsQueryHandler(
     IMapper mapper,
     ICacheService cacheService,
     IUserContext userContext)
-    : IQueryHandler<GetPostsQuery, (List<PostDto>, int, int)>
+    : IQueryHandler<GetPostsQuery, PaginatedByOffsetListDto<PostDto>>
 {
-    public async Task<Result<(List<PostDto>, int, int)>> Handle(GetPostsQuery query, CancellationToken cancellationToken)
+    public async Task<Result<PaginatedByOffsetListDto<PostDto>>> Handle(GetPostsQuery query, CancellationToken cancellationToken)
     {
+        if (query.Page < 1 || query.PageSize < 1)
+        {
+            return Result.Failure<PaginatedByOffsetListDto<PostDto>>(CommonErrors.InvalidPaginationParameters(query.Page, query.PageSize));
+        }
+
         string cacheKey = $"posts:{query.Page}:{query.PageSize}";
         string cacheData = await cacheService.GetCacheAsync(cacheKey);
 
-        (List<PostDto> postList, int totalPages, int totalItems) result;
+        PaginatedByOffsetListDto<PostDto> result;
         if (!string.IsNullOrEmpty(cacheData))
         {
-            result = JsonConvert.DeserializeObject<(List<PostDto>, int, int)>(cacheData);
-            if (result.postList is not null)
+            result = JsonConvert.DeserializeObject<PaginatedByOffsetListDto<PostDto>>(cacheData);
+            if (result is not null && result.Items is not null)
             {
                 return Result.Success(result);
             }
@@ -45,22 +51,22 @@ internal sealed class GetPostsQueryHandler(
         catch { userId = string.Empty; }
 
         IIncludableQueryable<Post, ApplicationUser> postsQuery = context.Posts
+            .OrderByDescending(p => p.CreatedAt)
             .Include(p => p.User);
 
         int totalItems = await postsQuery.CountAsync(cancellationToken);
         if (totalItems == 0)
         {
-            return Result.Success((new List<PostDto>(), 0, 0));
+            return Result.Success(new PaginatedByOffsetListDto<PostDto>());
         }
 
         int totalPages = (int)Math.Ceiling((double)totalItems / query.PageSize);
         if (query.Page > totalPages)
         {
-            return Result.Failure<(List<PostDto>, int, int)>(CommonErrors.GreaterThanTotalPages(query.Page, totalPages));
+            return Result.Failure<PaginatedByOffsetListDto<PostDto>>(CommonErrors.GreaterThanTotalPages(query.Page, totalPages));
         }
 
         List<Post> posts = await postsQuery
-            .OrderByDescending(p => p.CreatedAt)
             .Skip((query.Page - 1) * query.PageSize)
             .Take(query.PageSize)
             .ToListAsync(cancellationToken);
@@ -89,7 +95,7 @@ internal sealed class GetPostsQueryHandler(
             TotalComments = comments.Count(c => c.PostId == p.Id)
         }).ToList();
 
-        result = (postDtos, totalPages, totalItems);
+        result = new PaginatedByOffsetListDto<PostDto>(postDtos, totalItems, query.Page, query.PageSize);
 
         await cacheService.SetCacheAsync(cacheKey, result);
 

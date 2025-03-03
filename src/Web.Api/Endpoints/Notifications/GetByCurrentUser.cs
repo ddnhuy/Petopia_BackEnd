@@ -14,7 +14,7 @@ internal sealed class GetByCurrentUser : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app, ApiVersionSet apiVersionSet)
     {
-        app.MapGet("v{version:apiVersion}/notifications/currrent-user", [Authorize] async (ISender sender, CancellationToken cancellationToken) =>
+        app.MapGet("v{version:apiVersion}/notifications/current-user", [Authorize] async (ISender sender, CancellationToken cancellationToken) =>
         {
             var command = new GetNotificationsByCurrentUser();
 

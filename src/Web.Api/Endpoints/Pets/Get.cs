@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Pet;
+﻿using Application.DTOs;
+using Application.DTOs.Pet;
 using Application.Pets.Get;
 using Asp.Versioning;
 using Asp.Versioning.Builder;
@@ -18,15 +19,9 @@ public sealed class Get : IEndpoint
         {
             var query = new GetPetsQuery(userId, page, pageSize);
 
-            Result<(List<PetDto> petList, int totalPages, int totalItems)> result = await sender.Send(query, cancellationToken);
+            Result<PaginatedByOffsetListDto<PetDto>> result = await sender.Send(query, cancellationToken);
 
-            return result.Match(
-                success => Results.Ok(new
-                {
-                    TotalPages = success.totalPages,
-                    TotalItems = success.totalItems,
-                    Items = success.petList
-                }), CustomResults.Problem);
+            return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Pet)
         .WithApiVersionSet(apiVersionSet)

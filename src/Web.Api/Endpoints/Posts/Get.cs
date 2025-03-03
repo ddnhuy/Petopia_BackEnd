@@ -1,4 +1,5 @@
-﻿using Application.DTOs.Post;
+﻿using Application.DTOs;
+using Application.DTOs.Post;
 using Application.Posts.Get;
 using Application.Posts.GetByUserId;
 using Asp.Versioning;
@@ -17,17 +18,11 @@ public sealed class Get : IEndpoint
     {
         app.MapGet("v{version:apiVersion}/posts", async ([FromQuery] int page, [FromQuery] int pageSize, [FromQuery] string? userId, ISender sender, CancellationToken cancellationToken) =>
         {
-            Result<(List<PostDto> postList, int totalPages, int totalItems)> result = string.IsNullOrEmpty(userId)
+            Result<PaginatedByOffsetListDto<PostDto>> result = string.IsNullOrEmpty(userId)
                 ? await sender.Send(new GetPostsQuery(page, pageSize), cancellationToken)
                 : await sender.Send(new GetPostsByUserIdQuery(page, pageSize, userId), cancellationToken);
 
-            return result.Match(
-                success => Results.Ok(new
-                {
-                    TotalPages = success.totalPages,
-                    TotalItems = success.totalItems,
-                    Items = success.postList
-                }), CustomResults.Problem);
+            return result.Match(Results.Ok, CustomResults.Problem);
         })
         .WithTags(Tags.Post)
         .WithApiVersionSet(apiVersionSet)
