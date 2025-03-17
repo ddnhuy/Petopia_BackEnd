@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using System.Linq.Expressions;
 using Application.Abstractions.Data;
+using Domain.Advertisement;
 using Domain.Auths;
 using Domain.Comments;
 using Domain.Notifications;
@@ -38,6 +39,9 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
 
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<NotificationSubscription> NotificationSubscriptions { get; set; }
+
+    public DbSet<Ad> Ads { get; set; }
+    public DbSet<AdEvent> AdEvents { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
