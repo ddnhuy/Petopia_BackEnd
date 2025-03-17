@@ -39,4 +39,8 @@ public static class UserErrors
     public static readonly Error WrongPassword = Error.Problem(
         "Users.WrongPassword",
         "Bạn đã nhập sai mật khẩu.");
+
+    public static readonly Error PasswordRequiresDigit = Error.Problem(
+        "Users.PasswordRequiresDigit",
+        "Mật khẩu phải phải dài ít nhất 8 kí tự, và phải chứa ít nhất một chữ cái, một chữ số và một kí tự đặc biệt.");
 }
