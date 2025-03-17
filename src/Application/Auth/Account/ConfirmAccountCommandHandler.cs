@@ -25,6 +25,6 @@ internal sealed class ConfirmAccountCommandHandler(
             return Result.Failure<string>(UserErrors.InvalidConfirmToken);
         }
 
-        return Result.Success("Your email has been confirmed.");
+        return Result.Success("Email của bạn đã được xác nhận.");
     }
 }
