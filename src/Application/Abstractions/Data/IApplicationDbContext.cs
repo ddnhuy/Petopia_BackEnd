@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Domain.Advertisement;
 using Domain.Auths;
 using Domain.Comments;
 using Domain.Notifications;
@@ -32,6 +33,9 @@ public interface IApplicationDbContext
 
     DbSet<Notification> Notifications { get; }
     DbSet<NotificationSubscription> NotificationSubscriptions { get; }
+
+    DbSet<Ad> Ads { get; }
+    DbSet<AdEvent> AdEvents { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     Task<int> ExecuteDeleteAsync<TEntity>(Expression<Func<TEntity, bool>> predicate, CancellationToken cancellationToken = default) where TEntity : class;

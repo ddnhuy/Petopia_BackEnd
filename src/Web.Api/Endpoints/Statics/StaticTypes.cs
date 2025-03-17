@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.Statics.GetAdEventTypes;
 using Application.Statics.GetNotificationTypes;
 using Application.Statics.GetPetTypes;
 using Application.Statics.GetReactionTargetTypes;
@@ -37,6 +38,13 @@ public class StaticTypes : IEndpoint
         group.MapGet("/reaction-target-types", async (ISender sender, CancellationToken cancellationToken) =>
         {
             GetReactionTargetTypesQuery query = new();
+            Result<List<StaticTypeDto>> result = await sender.Send(query, cancellationToken);
+            return result.Match(Results.Ok, CustomResults.Problem);
+        });
+
+        group.MapGet("/ad-event-types", async (ISender sender, CancellationToken cancellationToken) =>
+        {
+            GetAdEventTypesQuery query = new();
             Result<List<StaticTypeDto>> result = await sender.Send(query, cancellationToken);
             return result.Match(Results.Ok, CustomResults.Problem);
         });

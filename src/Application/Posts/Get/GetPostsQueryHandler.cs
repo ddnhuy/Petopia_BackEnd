@@ -30,7 +30,14 @@ internal sealed class GetPostsQueryHandler(
             return Result.Failure<PaginatedByOffsetListDto<PostDto>>(CommonErrors.InvalidPaginationParameters(query.Page, query.PageSize));
         }
 
-        string cacheKey = $"posts:{query.Page}:{query.PageSize}";
+        string userId;
+        try
+        {
+            userId = userContext.UserId;
+        }
+        catch { userId = string.Empty; }
+
+        string cacheKey = string.IsNullOrEmpty(userId) ? $"posts:{query.Page}:{query.PageSize}" : $"posts:{userId}:{query.Page}:{query.PageSize}";
         string cacheData = await cacheService.GetCacheAsync(cacheKey);
 
         PaginatedByOffsetListDto<PostDto> result;
@@ -42,13 +49,6 @@ internal sealed class GetPostsQueryHandler(
                 return Result.Success(result);
             }
         }
-
-        string userId;
-        try
-        {
-            userId = userContext.UserId;
-        }
-        catch { userId = string.Empty; }
 
         IIncludableQueryable<Post, ApplicationUser> postsQuery = context.Posts
             .OrderByDescending(p => p.CreatedAt)
