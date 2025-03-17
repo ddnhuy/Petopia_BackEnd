@@ -18,4 +18,6 @@ public static class Tags
     public const string Reaction = "Reactions";
 
     public const string Notification = "Notifications";
+
+    public const string Ad = "Advertisements";
 }

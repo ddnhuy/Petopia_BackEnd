@@ -1,6 +1,7 @@
 ﻿using Application.Abstractions.Authentication;
 using Application.Abstractions.Data;
 using Application.Abstractions.Messaging;
+using Domain.Advertisement;
 using Domain.Comments;
 using Domain.Posts;
 using Microsoft.EntityFrameworkCore;
