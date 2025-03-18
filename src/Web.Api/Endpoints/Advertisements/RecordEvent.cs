@@ -18,18 +18,18 @@ public sealed class RecordEvent : IEndpoint
         group.WithApiVersionSet(apiVersionSet);
         group.MapToApiVersion(new ApiVersion(2, 0));
 
-        group.MapPost("/{AdId}/impression", async (Guid AdId, ISender sender, CancellationToken cancellationToken) =>
+        group.MapPost("/{adId}/impression", async (Guid adId, ISender sender, CancellationToken cancellationToken) =>
         {
-            var command = new RecordEventCommand(AdId, AdEventType.Impression);
+            var command = new RecordEventCommand(adId, AdEventType.Impression);
 
             Result result = await sender.Send(command, cancellationToken);
 
             return result.Match(Results.Created, CustomResults.Problem);
         });
 
-        group.MapPost("/{AdId}/click", async (Guid AdId, ISender sender, CancellationToken cancellationToken) =>
+        group.MapPost("/{adId}/click", async (Guid adId, ISender sender, CancellationToken cancellationToken) =>
         {
-            var command = new RecordEventCommand(AdId, AdEventType.Click);
+            var command = new RecordEventCommand(adId, AdEventType.Click);
 
             Result result = await sender.Send(command, cancellationToken);
 
