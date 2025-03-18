@@ -12,6 +12,9 @@ public sealed record AdStatisticsDto
     public double CostPerClick => TotalClicks > 0 ? TotalCost / TotalClicks : 0;
     public double ClickThroughRate => TotalImpressions > 0 ? (double)TotalClicks / TotalImpressions * 100 : 0;
 
+    public List<AdStatisticByDateDto> TotalImpressionsByDate { get; set; }
+    public List<AdStatisticByDateDto> TotalClicksByDate { get; set; }
+
     public Uri ImageUrl { get; set; }
     public string ImagePublicId { get; set; }
 
