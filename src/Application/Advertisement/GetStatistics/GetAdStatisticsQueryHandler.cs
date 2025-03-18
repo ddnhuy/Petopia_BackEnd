@@ -22,6 +22,32 @@ internal class GetAdStatisticsQueryHandler(
                         .OrderByDescending(a => a.CreatedAt)
                         .ToListAsync(cancellationToken);
 
-        return Result.Success(mapper.Map<IEnumerable<AdStatisticsDto>>(ads));
+        IEnumerable<AdStatisticsDto> result = mapper.Map<List<AdStatisticsDto>>(ads);
+
+        // get the total impressions and clicks for each ad by date
+        foreach (AdStatisticsDto ad in result)
+        {
+            ad.TotalImpressionsByDate = await context.AdEvents
+                .Where(s => s.AdId == ad.Id && s.EventType == AdEventType.Impression)
+                .GroupBy(s => s.CreatedAt.Date)
+                .Select(g => new AdStatisticByDateDto
+                {
+                    Date = g.Key,
+                    Count = g.Count()
+                })
+                .ToListAsync(cancellationToken);
+
+            ad.TotalClicksByDate = await context.AdEvents
+                .Where(s => s.AdId == ad.Id && s.EventType == AdEventType.Click)
+                .GroupBy(s => s.CreatedAt.Date)
+                .Select(g => new AdStatisticByDateDto
+                {
+                    Date = g.Key,
+                    Count = g.Count()
+                })
+                .ToListAsync(cancellationToken);
+        }
+
+        return Result.Success(result);
     }
 }
