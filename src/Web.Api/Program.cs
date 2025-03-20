@@ -23,6 +23,11 @@ builder.Services
 
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.Limits.MaxRequestBodySize = 50 * 1024 * 1024; // Increase the request body size limit to 50MB
+});
+
 WebApplication app = builder.Build();
 
 app.MapEndpoints();
